@@ -44,13 +44,12 @@ jobs:
         run: pnpm run build
 
       - uses: actions/upload-pages-artifact@v3
-        if: github.event_name == 'push'
         with:
           path: dist
 
   deploy:
     needs: build
-    if: github.event_name == 'push'
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
