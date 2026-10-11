@@ -1,5 +1,5 @@
 import type {
-  AnyStationContent,
+  AboutContent,
   ContactContent,
   ExperienceContent,
   ProjectsContent,
@@ -7,34 +7,24 @@ import type {
 } from '../../domain/entities/Station';
 
 /**
- * Pure function: domain content -> HTML markup string. No DOM access, no
- * Three.js — only string templating, so it's trivially testable and reusable
- * by both the 3D panel overlay and the simple-mode fallback page.
+ * Pure functions: domain content -> HTML markup fragments. No DOM access,
+ * no Three.js — only string templating, so every renderer here is trivially
+ * unit-testable and reusable by any layout that wants to show this content.
+ *
+ * Each renderer returns the INNER fragment only (no outer wrapper div) so
+ * callers can place it inside whatever container their layout needs.
  */
-export function renderStationBody(content: AnyStationContent): string {
-  switch (content.key) {
-    case 'about':
-      return `<div class="panel-body">${content.paragraphs.map((p) => `<p>${p}</p>`).join('\n')}</div>`;
 
-    case 'experience':
-      return renderExperience(content);
-
-    case 'projects':
-      return renderProjects(content);
-
-    case 'skills':
-      return renderSkills(content);
-
-    case 'contact':
-      return renderContact(content);
-
-    default:
-      return '';
-  }
+export function renderAboutParagraphs(content: AboutContent): string {
+  return content.paragraphs.map((p) => `<p>${p}</p>`).join('');
 }
 
-function renderExperience(content: ExperienceContent): string {
-  const jobs = content.jobs
+export function renderAboutIdentity(name: string, role: string): string {
+  return `<div class="tc-name">${name}</div><div class="tc-role">${role}</div>`;
+}
+
+export function renderExperienceList(content: ExperienceContent): string {
+  return content.jobs
     .map(
       (job) => `
       <div class="job">
@@ -45,21 +35,33 @@ function renderExperience(content: ExperienceContent): string {
       </div>`,
     )
     .join('');
-  return `<div class="panel-body">${jobs}</div>`;
 }
 
-function renderProjects(content: ProjectsContent): string {
-  const cards = content.projects
-    .map(
-      (p) => `
-      <div class="proj-card"><div class="org">${p.org}</div><h4>${p.title}</h4><p>${p.summary}</p></div>`,
-    )
+const PROJECT_TILE_COLORS = ['#FF4CD6', '#4CF3FF', '#FFC24C', '#7CFF4C', '#9B6CFF', '#FF6C4C'];
+
+export function renderProjectCards(content: ProjectsContent): string {
+  return content.projects
+    .map((p, i) => {
+      const tileColor = PROJECT_TILE_COLORS[i % PROJECT_TILE_COLORS.length];
+      const initials = p.title
+        .split(' ')
+        .map((w) => w[0])
+        .slice(0, 2)
+        .join('')
+        .toUpperCase();
+      return `
+      <div class="proj-card">
+        <div class="proj-tile" style="--tile-color:${tileColor}"><span>${initials}</span></div>
+        <div class="org">${p.org}</div>
+        <h4>${p.title}</h4>
+        <p>${p.summary}</p>
+      </div>`;
+    })
     .join('');
-  return `<div class="panel-body"><div class="proj-grid">${cards}</div></div>`;
 }
 
-function renderSkills(content: SkillsContent): string {
-  const groups = content.groups
+export function renderSkillGroups(content: SkillsContent): string {
+  return content.groups
     .map(
       (g) => `
       <div class="skill-group"><h4>${g.title}</h4><div class="tags">${g.skills
@@ -67,22 +69,16 @@ function renderSkills(content: SkillsContent): string {
         .join('')}</div></div>`,
     )
     .join('');
-  return `<div class="panel-body">${groups}</div>`;
 }
 
-function renderContact(content: ContactContent): string {
-  const links = content.links
+export function renderContactRows(content: ContactContent): string {
+  const rows = content.links
     .map((link) => {
       const inner = link.href
         ? `<a href="${link.href}" target="${link.href.startsWith('http') ? '_blank' : '_self'}" rel="noopener">${link.label}</a>`
-        : `<span style="color:#C3C9D6;">${link.label}</span>`;
+        : `<span>${link.label}</span>`;
       return `<div class="contact-row"><span class="ico">${link.icon}</span>${inner}</div>`;
     })
     .join('');
-  return `<div class="panel-body">${links}<p style="margin-top:22px;color:#8893A8;font-size:0.85rem;">${content.note}</p></div>`;
-}
-
-export function renderStationHeader(content: AnyStationContent): string {
-  return `<div class="panel-eyebrow" style="--accent:${content.accentHex}">${content.eyebrow}</div>
-    <div class="panel-title">${content.title}</div>`;
+  return `${rows}<p class="contact-note">${content.note}</p>`;
 }

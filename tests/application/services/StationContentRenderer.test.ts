@@ -1,7 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import {
-  renderStationBody,
-  renderStationHeader,
+  renderAboutIdentity,
+  renderAboutParagraphs,
+  renderContactRows,
+  renderExperienceList,
+  renderProjectCards,
+  renderSkillGroups,
 } from '../../../src/application/services/StationContentRenderer';
 import {
   aboutContent,
@@ -12,27 +16,26 @@ import {
 } from '../../../content/portfolio';
 
 describe('StationContentRenderer', () => {
-  describe('renderStationHeader', () => {
-    it('renders the eyebrow, accent color and title for any station', () => {
-      const html = renderStationHeader(aboutContent);
-      expect(html).toContain(aboutContent.eyebrow);
-      expect(html).toContain(aboutContent.title);
-      expect(html).toContain(aboutContent.accentHex);
+  describe('renderAboutIdentity', () => {
+    it('renders the given name and role', () => {
+      const html = renderAboutIdentity('Juan Sebastián', 'Senior Full Stack Developer');
+      expect(html).toContain('Juan Sebastián');
+      expect(html).toContain('Senior Full Stack Developer');
     });
   });
 
-  describe('renderStationBody — about', () => {
+  describe('renderAboutParagraphs', () => {
     it('renders every paragraph wrapped in <p>', () => {
-      const html = renderStationBody(aboutContent);
+      const html = renderAboutParagraphs(aboutContent);
       for (const paragraph of aboutContent.paragraphs) {
         expect(html).toContain(`<p>${paragraph}</p>`);
       }
     });
   });
 
-  describe('renderStationBody — experience', () => {
-    it('renders every job with role, org, period and all tags', () => {
-      const html = renderStationBody(experienceContent);
+  describe('renderExperienceList', () => {
+    it('renders every job with role, org, period, summary and all tags', () => {
+      const html = renderExperienceList(experienceContent);
       for (const job of experienceContent.jobs) {
         expect(html).toContain(job.role);
         expect(html).toContain(job.org);
@@ -45,15 +48,15 @@ describe('StationContentRenderer', () => {
     });
 
     it('renders one .job block per job entry (no entries dropped)', () => {
-      const html = renderStationBody(experienceContent);
+      const html = renderExperienceList(experienceContent);
       const jobBlockCount = (html.match(/class="job"/g) ?? []).length;
       expect(jobBlockCount).toBe(experienceContent.jobs.length);
     });
   });
 
-  describe('renderStationBody — projects', () => {
+  describe('renderProjectCards', () => {
     it('renders one project card per project, with org/title/summary', () => {
-      const html = renderStationBody(projectsContent);
+      const html = renderProjectCards(projectsContent);
       const cardCount = (html.match(/class="proj-card"/g) ?? []).length;
       expect(cardCount).toBe(projectsContent.projects.length);
 
@@ -63,11 +66,19 @@ describe('StationContentRenderer', () => {
         expect(html).toContain(project.summary);
       }
     });
+
+    it('renders one color tile per project, cycling through the fixed palette', () => {
+      const html = renderProjectCards(projectsContent);
+      const tileCount = (html.match(/class="proj-tile"/g) ?? []).length;
+      expect(tileCount).toBe(projectsContent.projects.length);
+      const colorDeclarations = html.match(/--tile-color:#[0-9A-Fa-f]{6}/g) ?? [];
+      expect(colorDeclarations).toHaveLength(projectsContent.projects.length);
+    });
   });
 
-  describe('renderStationBody — skills', () => {
+  describe('renderSkillGroups', () => {
     it('renders every skill group with its title and all skills as tags', () => {
-      const html = renderStationBody(skillsContent);
+      const html = renderSkillGroups(skillsContent);
       for (const group of skillsContent.groups) {
         expect(html).toContain(group.title);
         for (const skill of group.skills) {
@@ -77,9 +88,9 @@ describe('StationContentRenderer', () => {
     });
   });
 
-  describe('renderStationBody — contact', () => {
+  describe('renderContactRows', () => {
     it('renders mailto/http links with the right target, and plain text for href-less links', () => {
-      const html = renderStationBody(contactContent);
+      const html = renderContactRows(contactContent);
 
       const email = contactContent.links.find((l) => l.href?.startsWith('mailto:'));
       expect(email).toBeDefined();

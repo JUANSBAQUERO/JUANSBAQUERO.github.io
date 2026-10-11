@@ -18,9 +18,9 @@ export function createBloomComposer(
 
   const bloom = new UnrealBloomPass(
     new THREE.Vector2(window.innerWidth, window.innerHeight),
-    0.55, // strength
-    0.6, // radius
-    0.25, // threshold
+    0.45, // strength
+    0.5, // radius
+    0.78, // threshold — only strongly emissive/bright pixels (rings, scan FX) bloom
   );
   composer.addPass(bloom);
   composer.addPass(new OutputPass());

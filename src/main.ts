@@ -1,75 +1,97 @@
 import { StaticContentRepository } from './infrastructure/content/StaticContentRepository';
-import { PortfolioScene } from './infrastructure/three/PortfolioScene';
-import { HudView } from './presentation/hud/HudView';
-import { PanelView } from './presentation/panels/PanelView';
-import { SimpleModeView } from './presentation/panels/SimpleModeView';
+import { CharacterScene } from './infrastructure/three/CharacterScene';
+import { NavPillView } from './presentation/nav/NavPillView';
+import { computeActiveSectionKey, type ScrollSection } from './application/services/ScrollSpy';
+import {
+  renderAboutIdentity,
+  renderAboutParagraphs,
+  renderContactRows,
+  renderExperienceList,
+  renderProjectCards,
+  renderSkillGroups,
+} from './application/services/StationContentRenderer';
+import type {
+  AboutContent,
+  ContactContent,
+  ExperienceContent,
+  ProjectsContent,
+  SkillsContent,
+  StationKey,
+} from './domain/entities/Station';
+
+const SECTION_KEYS: readonly StationKey[] = ['about', 'experience', 'projects', 'skills', 'contact'];
 
 /**
- * Composition root. Wires the content repository (domain port), the 3D
- * engine (infrastructure) and the DOM views (presentation) together.
- * This is the ONLY file in the app allowed to know about every layer at
- * once — everything else depends on abstractions, not on this file.
+ * Composition root for the scroll-narrative portfolio: wires the content
+ * repository, the fixed 3D character, the floating nav pill, and scroll-spy
+ * together. This is the only file allowed to know about every layer at once.
  */
 function bootstrap(): void {
-  const appEl = document.getElementById('app');
-  if (!appEl) throw new Error('#app root element missing');
+  const stageEl = document.getElementById('character-stage');
+  if (!stageEl) throw new Error('#character-stage root element missing');
 
   const content = new StaticContentRepository();
-  const hud = new HudView();
-  const panel = new PanelView(content);
-  const simpleMode = new SimpleModeView(content);
-  let isPanelOpen = false;
+  const scene = new CharacterScene(stageEl);
+  const nav = new NavPillView();
 
-  const closePanel = (): void => {
-    panel.close();
-    isPanelOpen = false;
-    scene.setPanelOpen(false);
-    scene.lock();
+  populateContent(content);
+
+  nav.onNavigate = (key) => {
+    document.getElementById(`section-${key}`)?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const scene = new PortfolioScene(appEl, content, {
-    onLock: () => hud.setLocked(true),
-    onUnlock: () => {
-      hud.setLocked(false);
-      if (!isPanelOpen) hud.showStartScreen();
-    },
-    onProximityChange: (_key, title) => hud.setProximityPrompt(title),
-    onInteract: (key) => {
-      isPanelOpen = true;
-      panel.open(key);
-    },
-    onEscape: () => closePanel(),
-  });
+  const sectionEls = SECTION_KEYS.map((key) => document.getElementById(`section-${key}`)).filter(
+    (el): el is HTMLElement => el !== null,
+  );
 
-  panel.onCloseRequested = () => closePanel();
+  let activeKey: StationKey | null = null;
+  let hasRunOnce = false;
 
-  hud.onEnter(() => {
-    hud.hideStartScreen();
-    scene.lock();
-  });
+  function updateActiveSection(): void {
+    const sections: ScrollSection[] = sectionEls.map((el) => ({
+      key: (el.dataset.station ?? '') as string,
+      top: el.offsetTop,
+      height: el.offsetHeight,
+    }));
+    const nextKey = computeActiveSectionKey(
+      sections,
+      window.scrollY,
+      window.innerHeight,
+    ) as StationKey | null;
+    if (nextKey !== activeKey || !hasRunOnce) {
+      hasRunOnce = true;
+      activeKey = nextKey;
+      nav.setActive(activeKey);
+      scene.setActiveStation(activeKey);
+      document.body.classList.toggle('is-hero', activeKey === null);
+    }
+  }
 
-  hud.onRequestSimpleMode(() => {
-    hud.hideStartScreen();
-    simpleMode.show();
-  });
-
-  simpleMode.onBackTo3D(() => {
-    simpleMode.hide();
-    hud.showToggleButton();
-  });
+  window.addEventListener('scroll', updateActiveSection, { passive: true });
+  window.addEventListener('resize', updateActiveSection);
 
   scene.start();
+  updateActiveSection();
+}
 
-  // Device + stored-preference defaults: pointer-lock FPS controls don't
-  // work well on touch, so default straight to the text fallback there.
-  if (SimpleModeView.isTouchDevice) {
-    hud.setTouchHint();
-  }
-  const stored = SimpleModeView.storedPreference;
-  if (SimpleModeView.isTouchDevice || stored === 'simple') {
-    hud.hideStartScreen();
-    simpleMode.show();
-  }
+function populateContent(content: StaticContentRepository): void {
+  const about = content.getStationContent('about') as AboutContent;
+  const experience = content.getStationContent('experience') as ExperienceContent;
+  const projects = content.getStationContent('projects') as ProjectsContent;
+  const skills = content.getStationContent('skills') as SkillsContent;
+  const contact = content.getStationContent('contact') as ContactContent;
+
+  setHtml('tcAboutName', renderAboutIdentity('Juan Sebastián', 'Senior Full Stack Developer'));
+  setHtml('tcAboutBody', renderAboutParagraphs(about));
+  setHtml('experienceList', renderExperienceList(experience));
+  setHtml('projectsGrid', renderProjectCards(projects));
+  setHtml('skillsList', renderSkillGroups(skills));
+  setHtml('contactList', renderContactRows(contact));
+}
+
+function setHtml(id: string, html: string): void {
+  const el = document.getElementById(id);
+  if (el) el.innerHTML = html;
 }
 
 bootstrap();
