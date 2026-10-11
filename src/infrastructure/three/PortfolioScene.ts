@@ -1,28 +1,22 @@
-import * as THREE from "three";
-import { PointerLockControls } from "three/addons/controls/PointerLockControls.js";
+import * as THREE from 'three';
+import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 
-import { buildEnvironment } from "./scene/Environment";
-import { createPedestal } from "./scene/Pedestal";
-import {
-  animatePedestals,
-  animateSpinningLandmarks,
-} from "./scene/PedestalAnimator";
-import { createBloomComposer } from "./postprocessing/BloomComposer";
-import type { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
-import { KeyboardInput } from "./input/KeyboardInput";
-import { MovementController } from "./input/MovementController";
-import { ProximityTracker } from "./input/ProximityTracker";
+import { buildEnvironment } from './scene/Environment';
+import { createPedestal } from './scene/Pedestal';
+import { animatePedestals, animateSpinningLandmarks } from './scene/PedestalAnimator';
+import { createBloomComposer } from './postprocessing/BloomComposer';
+import type { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { KeyboardInput } from './input/KeyboardInput';
+import { MovementController } from './input/MovementController';
+import { ProximityTracker } from './input/ProximityTracker';
 
-import type { ContentRepository } from "../../domain/repositories/ContentRepository";
-import type { StationKey } from "../../domain/entities/Station";
+import type { ContentRepository } from '../../domain/repositories/ContentRepository';
+import type { StationKey } from '../../domain/entities/Station';
 
 export interface PortfolioSceneCallbacks {
   onLock: () => void;
   onUnlock: () => void;
-  onProximityChange: (
-    stationKey: StationKey | null,
-    title: string | null,
-  ) => void;
+  onProximityChange: (stationKey: StationKey | null, title: string | null) => void;
   onInteract: (stationKey: StationKey) => void;
   onEscape: () => void;
 }
@@ -57,17 +51,12 @@ export class PortfolioScene {
     private readonly content: ContentRepository,
     private readonly callbacks: PortfolioSceneCallbacks,
   ) {
-    this.camera = new THREE.PerspectiveCamera(
-      70,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      500,
-    );
+    this.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 500);
     this.camera.position.set(0, 1.7, 17);
 
     this.renderer = new THREE.WebGLRenderer({
       antialias: true,
-      powerPreference: "high-performance",
+      powerPreference: 'high-performance',
     });
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -85,17 +74,10 @@ export class PortfolioScene {
 
     this.composer = createBloomComposer(this.renderer, this.scene, this.camera);
 
-    this.controls = new PointerLockControls(
-      this.camera,
-      this.renderer.domElement,
-    );
+    this.controls = new PointerLockControls(this.camera, this.renderer.domElement);
     this.scene.add(this.controls.getObject());
 
-    this.movement = new MovementController(
-      this.controls,
-      this.pedestals,
-      this.clock,
-    );
+    this.movement = new MovementController(this.controls, this.pedestals, this.clock);
     this.proximity = new ProximityTracker(this.controls, this.pedestals);
     this.keyboard = new KeyboardInput((action) => this.handleAction(action));
 
@@ -110,7 +92,7 @@ export class PortfolioScene {
   dispose(): void {
     cancelAnimationFrame(this.frameHandle);
     this.keyboard.detach();
-    window.removeEventListener("resize", this.handleResize);
+    window.removeEventListener('resize', this.handleResize);
   }
 
   lock(): void {
@@ -123,9 +105,9 @@ export class PortfolioScene {
   }
 
   private bindEvents = (): void => {
-    window.addEventListener("resize", this.handleResize);
-    this.controls.addEventListener("lock", () => this.callbacks.onLock());
-    this.controls.addEventListener("unlock", () => {
+    window.addEventListener('resize', this.handleResize);
+    this.controls.addEventListener('lock', () => this.callbacks.onLock());
+    this.controls.addEventListener('unlock', () => {
       this.callbacks.onUnlock();
     });
   };
@@ -137,15 +119,15 @@ export class PortfolioScene {
     this.composer.setSize(window.innerWidth, window.innerHeight);
   };
 
-  private handleAction(action: "interact" | "close-panel"): void {
-    if (action === "interact") {
+  private handleAction(action: 'interact' | 'close-panel'): void {
+    if (action === 'interact') {
       const key = this.proximity.currentKey;
       if (key && !this.panelOpen) {
         this.panelOpen = true;
         this.controls.unlock();
         this.callbacks.onInteract(key);
       }
-    } else if (action === "close-panel" && this.panelOpen) {
+    } else if (action === 'close-panel' && this.panelOpen) {
       this.callbacks.onEscape();
     }
   }
@@ -159,10 +141,7 @@ export class PortfolioScene {
     const nearest = this.proximity.update(this.panelOpen);
     if (nearest) {
       const key = this.proximity.currentKey!;
-      this.callbacks.onProximityChange(
-        key,
-        this.content.getStationContent(key).title,
-      );
+      this.callbacks.onProximityChange(key, this.content.getStationContent(key).title);
     } else {
       this.callbacks.onProximityChange(null, null);
     }

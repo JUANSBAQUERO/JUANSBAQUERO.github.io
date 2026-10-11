@@ -54,6 +54,9 @@ src/
 src/main.ts                        ← Composition root: wires content repo +
                                       3D engine + DOM views together. The ONLY
                                       file allowed to know every layer at once.
+
+tests/                              ← Vitest unit tests, mirroring src/ layer
+                                      by layer (see Testing section below).
 ```
 
 ### Why this shape
@@ -75,18 +78,45 @@ src/main.ts                        ← Composition root: wires content repo +
 
 Requires Node 22+ (this repo was scaffolded with Node 26 via Homebrew;
 `npm install -g n` or use `/opt/homebrew/bin/node` if your default Node is
-older).
+older). Package manager is **pnpm** (pinned via `packageManager` in
+`package.json`).
 
 ```bash
-npm install
-npm run dev        # http://localhost:5173
-npm run typecheck  # tsc --noEmit
-npm run build      # typecheck + production build -> dist/
-npm run preview    # serve the production build locally
+pnpm install
+pnpm run dev            # http://localhost:5173
+pnpm run typecheck      # tsc --noEmit
+pnpm run test           # vitest run (unit tests, one-shot)
+pnpm run test:watch     # vitest (watch mode)
+pnpm run test:coverage  # vitest run --coverage
+pnpm run build          # typecheck + production build -> dist/
+pnpm run preview        # serve the production build locally
 ```
+
+## Testing
+
+Unit tests live in `tests/`, mirroring the `src/` layer structure, and run on
+[Vitest](https://vitest.dev) (no DOM/WebGL — pure Node). They target the
+layers designed to be framework-agnostic:
+
+- `tests/application/services/StationContentRenderer.test.ts` — domain
+  content → HTML string, for every station type.
+- `tests/infrastructure/content/StaticContentRepository.test.ts` — content
+  repository contract (every station has layout + content, no orphans).
+- `tests/infrastructure/three/input/MovementController.test.ts` — boundary
+  clamp, pedestal collision push-back, head-bob math, using a lightweight
+  fake of `PointerLockControls` (no real WebGL context needed).
+- `tests/infrastructure/three/input/ProximityTracker.test.ts` — nearest-
+  pedestal detection logic.
+
+Three.js scene construction itself (`Environment.ts`, `Pedestal.ts`,
+`BloomComposer.ts`, `PortfolioScene.ts`) is intentionally **not** unit-tested
+— it requires a real WebGL context — and is instead verified visually with
+Playwright + screenshots before every deploy (see session history / PR
+checks).
 
 ## Deployment
 
-Pushing to `main` triggers `.github/workflows/deploy.yml`, which typechecks,
-builds, and publishes `dist/` to GitHub Pages automatically. No manual build
-step or committed `dist/` folder.
+Pushing to `main` triggers `.github/workflows/deploy.yml`, which installs
+with pnpm, typechecks, runs the unit test suite, builds, and publishes
+`dist/` to GitHub Pages automatically. No manual build step or committed
+`dist/` folder.

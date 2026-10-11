@@ -1,8 +1,8 @@
-import { StaticContentRepository } from "./infrastructure/content/StaticContentRepository";
-import { PortfolioScene } from "./infrastructure/three/PortfolioScene";
-import { HudView } from "./presentation/hud/HudView";
-import { PanelView } from "./presentation/panels/PanelView";
-import { SimpleModeView } from "./presentation/panels/SimpleModeView";
+import { StaticContentRepository } from './infrastructure/content/StaticContentRepository';
+import { PortfolioScene } from './infrastructure/three/PortfolioScene';
+import { HudView } from './presentation/hud/HudView';
+import { PanelView } from './presentation/panels/PanelView';
+import { SimpleModeView } from './presentation/panels/SimpleModeView';
 
 /**
  * Composition root. Wires the content repository (domain port), the 3D
@@ -11,8 +11,8 @@ import { SimpleModeView } from "./presentation/panels/SimpleModeView";
  * once — everything else depends on abstractions, not on this file.
  */
 function bootstrap(): void {
-  const appEl = document.getElementById("app");
-  if (!appEl) throw new Error("#app root element missing");
+  const appEl = document.getElementById('app');
+  if (!appEl) throw new Error('#app root element missing');
 
   const content = new StaticContentRepository();
   const hud = new HudView();
@@ -66,7 +66,7 @@ function bootstrap(): void {
     hud.setTouchHint();
   }
   const stored = SimpleModeView.storedPreference;
-  if (SimpleModeView.isTouchDevice || stored === "simple") {
+  if (SimpleModeView.isTouchDevice || stored === 'simple') {
     hud.hideStartScreen();
     simpleMode.show();
   }

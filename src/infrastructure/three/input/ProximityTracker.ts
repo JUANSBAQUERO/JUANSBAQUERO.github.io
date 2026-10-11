@@ -1,7 +1,7 @@
-import * as THREE from "three";
-import type { PointerLockControls } from "three/addons/controls/PointerLockControls.js";
-import type { StationKey } from "../../../domain/entities/Station";
-import type { PedestalUserData } from "../scene/Pedestal";
+import * as THREE from 'three';
+import type { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
+import type { StationKey } from '../../../domain/entities/Station';
+import type { PedestalUserData } from '../scene/Pedestal';
 
 /**
  * Finds the nearest pedestal within interaction range of the player, each

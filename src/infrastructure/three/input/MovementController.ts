@@ -1,8 +1,8 @@
-import * as THREE from "three";
-import type { PointerLockControls } from "three/addons/controls/PointerLockControls.js";
-import type { KeyState } from "../input/KeyboardInput";
-import { PLAY_RADIUS } from "../scene/Environment";
-import type { PedestalUserData } from "../scene/Pedestal";
+import * as THREE from 'three';
+import type { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
+import type { KeyState } from '../input/KeyboardInput';
+import { PLAY_RADIUS } from '../scene/Environment';
+import type { PedestalUserData } from '../scene/Pedestal';
 
 /**
  * Applies WASD movement, damping, the plaza boundary clamp, and pedestal

@@ -1,8 +1,4 @@
-import type {
-  AnyStationContent,
-  StationKey,
-  StationSection,
-} from "../entities/Station";
+import type { AnyStationContent, StationKey, StationSection } from '../entities/Station';
 
 /**
  * Port (interface) for reading portfolio content. The domain/application

@@ -7,8 +7,7 @@
  * (Dependency Inversion: infrastructure depends on this, not the other way).
  */
 
-export type StationKey =
-  "about" | "experience" | "projects" | "skills" | "contact";
+export type StationKey = 'about' | 'experience' | 'projects' | 'skills' | 'contact';
 
 export interface Vec3Tuple {
   readonly x: number;
@@ -56,34 +55,30 @@ export interface StationContent {
 }
 
 export interface AboutContent extends StationContent {
-  readonly key: "about";
+  readonly key: 'about';
   readonly paragraphs: readonly string[];
 }
 
 export interface ExperienceContent extends StationContent {
-  readonly key: "experience";
+  readonly key: 'experience';
   readonly jobs: readonly JobEntry[];
 }
 
 export interface ProjectsContent extends StationContent {
-  readonly key: "projects";
+  readonly key: 'projects';
   readonly projects: readonly ProjectEntry[];
 }
 
 export interface SkillsContent extends StationContent {
-  readonly key: "skills";
+  readonly key: 'skills';
   readonly groups: readonly SkillGroup[];
 }
 
 export interface ContactContent extends StationContent {
-  readonly key: "contact";
+  readonly key: 'contact';
   readonly links: readonly ContactLink[];
   readonly note: string;
 }
 
 export type AnyStationContent =
-  | AboutContent
-  | ExperienceContent
-  | ProjectsContent
-  | SkillsContent
-  | ContactContent;
+  AboutContent | ExperienceContent | ProjectsContent | SkillsContent | ContactContent;

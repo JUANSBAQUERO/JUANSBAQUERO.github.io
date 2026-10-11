@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import * as THREE from 'three';
 
 export const PLAY_RADIUS = 23;
 
@@ -75,7 +75,7 @@ function buildStarfield(): THREE.Points {
     positions[i * 3 + 2] = r * Math.sin(phi) * Math.sin(theta);
   }
 
-  geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
   const material = new THREE.PointsMaterial({
     color: 0x6fe8ff,
     size: 0.6,

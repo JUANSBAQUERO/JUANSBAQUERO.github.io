@@ -3,4 +3,5 @@ dist
 .DS_Store
 *.log
 .vite
+coverage
 index.html.legacy-single-file.bak

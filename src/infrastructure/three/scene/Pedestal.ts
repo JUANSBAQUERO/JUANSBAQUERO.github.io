@@ -1,24 +1,21 @@
-import * as THREE from "three";
-import type { StationSection } from "../../../domain/entities/Station";
+import * as THREE from 'three';
+import type { StationSection } from '../../../domain/entities/Station';
 
 /**
  * Builds the sprite label that floats above each pedestal. Pure Three.js
  * factory function — no scene/state knowledge, easy to unit-test or swap.
  */
-export function createLabelSprite(
-  text: string,
-  hexColor: string,
-): THREE.Sprite {
-  const canvas = document.createElement("canvas");
+export function createLabelSprite(text: string, hexColor: string): THREE.Sprite {
+  const canvas = document.createElement('canvas');
   canvas.width = 512;
   canvas.height = 128;
-  const ctx = canvas.getContext("2d")!;
-  ctx.font = "700 56px Space Grotesk, sans-serif";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
+  const ctx = canvas.getContext('2d')!;
+  ctx.font = '700 56px Space Grotesk, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
   ctx.shadowColor = hexColor;
   ctx.shadowBlur = 24;
-  ctx.fillStyle = "#EAF6FF";
+  ctx.fillStyle = '#EAF6FF';
   ctx.fillText(text, 256, 64);
 
   const texture = new THREE.CanvasTexture(canvas);
@@ -34,7 +31,7 @@ export function createLabelSprite(
 }
 
 export interface PedestalUserData {
-  key: StationSection["key"];
+  key: StationSection['key'];
   collisionRadius: number;
   interactRadius: number;
   gem: THREE.Mesh;
@@ -47,16 +44,9 @@ export interface PedestalUserData {
  * Responsibility Principle: this module only knows how to BUILD a pedestal,
  * not how to animate or collide with it (see PedestalAnimator / MovementController).
  */
-export function createPedestal(
-  station: StationSection,
-  title: string,
-): THREE.Group {
+export function createPedestal(station: StationSection, title: string): THREE.Group {
   const group = new THREE.Group();
-  group.position.set(
-    station.position.x,
-    station.position.y,
-    station.position.z,
-  );
+  group.position.set(station.position.x, station.position.y, station.position.z);
 
   const base = new THREE.Mesh(
     new THREE.CylinderGeometry(1.1, 1.3, 0.4, 24),
@@ -94,7 +84,7 @@ export function createPedestal(
   pointLight.position.y = 2.1;
   group.add(pointLight);
 
-  const hexColor = "#" + station.color.toString(16).padStart(6, "0");
+  const hexColor = '#' + station.color.toString(16).padStart(6, '0');
   const label = createLabelSprite(title.toUpperCase(), hexColor);
   label.position.y = 3.6;
   group.add(label);

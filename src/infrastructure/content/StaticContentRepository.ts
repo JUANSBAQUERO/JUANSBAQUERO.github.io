@@ -1,9 +1,5 @@
-import type { ContentRepository } from "../../domain/repositories/ContentRepository";
-import type {
-  AnyStationContent,
-  StationKey,
-  StationSection,
-} from "../../domain/entities/Station";
+import type { ContentRepository } from '../../domain/repositories/ContentRepository';
+import type { AnyStationContent, StationKey, StationSection } from '../../domain/entities/Station';
 import {
   aboutContent,
   contactContent,
@@ -11,7 +7,7 @@ import {
   projectsContent,
   skillsContent,
   stationLayout,
-} from "../../../content/portfolio";
+} from '../../../content/portfolio';
 
 /**
  * Concrete adapter: reads content from the static TS module in /content.

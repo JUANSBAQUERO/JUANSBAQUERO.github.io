@@ -5,7 +5,7 @@ export interface KeyState {
   d: boolean;
 }
 
-export type KeyActionHandler = (action: "interact" | "close-panel") => void;
+export type KeyActionHandler = (action: 'interact' | 'close-panel') => void;
 
 /**
  * Tracks raw WASD/Arrow key state and raises semantic actions (E / Escape)
@@ -20,58 +20,58 @@ export class KeyboardInput {
   }
 
   attach(): void {
-    document.addEventListener("keydown", this.handleKeyDown);
-    document.addEventListener("keyup", this.handleKeyUp);
+    document.addEventListener('keydown', this.handleKeyDown);
+    document.addEventListener('keyup', this.handleKeyUp);
   }
 
   detach(): void {
-    document.removeEventListener("keydown", this.handleKeyDown);
-    document.removeEventListener("keyup", this.handleKeyUp);
+    document.removeEventListener('keydown', this.handleKeyDown);
+    document.removeEventListener('keyup', this.handleKeyUp);
   }
 
   private handleKeyDown(e: KeyboardEvent): void {
     switch (e.code) {
-      case "KeyW":
-      case "ArrowUp":
+      case 'KeyW':
+      case 'ArrowUp':
         this.keys.w = true;
         break;
-      case "KeyA":
-      case "ArrowLeft":
+      case 'KeyA':
+      case 'ArrowLeft':
         this.keys.a = true;
         break;
-      case "KeyS":
-      case "ArrowDown":
+      case 'KeyS':
+      case 'ArrowDown':
         this.keys.s = true;
         break;
-      case "KeyD":
-      case "ArrowRight":
+      case 'KeyD':
+      case 'ArrowRight':
         this.keys.d = true;
         break;
-      case "KeyE":
-        this.onAction("interact");
+      case 'KeyE':
+        this.onAction('interact');
         break;
-      case "Escape":
-        this.onAction("close-panel");
+      case 'Escape':
+        this.onAction('close-panel');
         break;
     }
   }
 
   private handleKeyUp(e: KeyboardEvent): void {
     switch (e.code) {
-      case "KeyW":
-      case "ArrowUp":
+      case 'KeyW':
+      case 'ArrowUp':
         this.keys.w = false;
         break;
-      case "KeyA":
-      case "ArrowLeft":
+      case 'KeyA':
+      case 'ArrowLeft':
         this.keys.a = false;
         break;
-      case "KeyS":
-      case "ArrowDown":
+      case 'KeyS':
+      case 'ArrowDown':
         this.keys.s = false;
         break;
-      case "KeyD":
-      case "ArrowRight":
+      case 'KeyD':
+      case 'ArrowRight':
         this.keys.d = false;
         break;
     }
