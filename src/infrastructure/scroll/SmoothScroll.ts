@@ -22,7 +22,7 @@ export class SmoothScroll {
     this.lenis.on('scroll', callback);
   }
 
-  scrollTo(target: string | HTMLElement): void {
+  scrollTo(target: string | HTMLElement | number): void {
     this.lenis.scrollTo(target, { duration: 1.2 });
   }
 

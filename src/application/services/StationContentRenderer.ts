@@ -20,7 +20,7 @@ export function renderAboutParagraphs(content: AboutContent): string {
 }
 
 export function renderAboutIdentity(name: string, role: string): string {
-  return `<div class="tc-name">${name}</div><div class="tc-role">${role}</div>`;
+  return `${name}<div class="tc-role">${role}</div>`;
 }
 
 export function renderExperienceList(content: ExperienceContent): string {

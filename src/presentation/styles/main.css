@@ -7,13 +7,6 @@
   --accent-orange: #ff8a3d;
   --card: #ffffff;
   --line: rgba(34, 31, 26, 0.12);
-  --stage-width: min(46vw, 560px);
-
-  --section-about: #0f1f33;
-  --section-experience: #122b3f;
-  --section-projects: #f4ede2;
-  --section-skills: #1a2f1f;
-  --section-contact: #f4ede2;
 }
 
 * {
@@ -24,10 +17,9 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: var(--cream);
+  background: #0b1420;
   color: var(--ink);
   font-family: 'Space Grotesk', system-ui, sans-serif;
-  scroll-behavior: smooth;
 }
 
 h1,
@@ -38,39 +30,66 @@ h4 {
   letter-spacing: -0.01em;
 }
 
-/* ---------- fixed 3D character layer ---------- */
-#character-stage {
+/* ---------- fixed 3D journey stage: occupies a fixed band at the TOP of
+   the viewport (not the full screen) -- content cards live in normal
+   document flow below it, so the two never compete for the same space or
+   overlap. The character's own walk/run/crash/bow animation plays inside
+   this band only. ---------- */
+#journey-stage {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: var(--stage-width);
-  height: min(70vh, 640px);
-  z-index: 15;
-  pointer-events: none;
-  border-radius: 28px;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--stage-band-height, 46vh);
+  z-index: 20;
+  background: #0b1420;
   overflow: hidden;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.18);
-  opacity: 1;
-  transition: box-shadow 0.4s ease, width 0.4s ease, height 0.4s ease, opacity 0.5s ease;
 }
-body.is-hero #character-stage {
-  width: min(30vw, 340px);
-  height: min(42vh, 380px);
+/* Soft fade instead of a hard line between the fixed animation band and
+   the scrolling content below -- the 3D render itself just stops at the
+   stage's bottom edge, which reads as an abrupt cut no matter what color
+   is on each side. Fading the render to the shared background color over
+   its last ~140px blends the two into one continuous backdrop. */
+#journey-stage::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 140px;
+  background: linear-gradient(to bottom, rgba(11, 20, 32, 0) 0%, rgba(11, 20, 32, 0.7) 60%, #0b1420 100%);
+  pointer-events: none;
 }
-body.is-projects #character-stage {
-  opacity: 0;
-}
-#character-stage canvas {
+#journey-stage canvas {
   display: block;
   width: 100% !important;
   height: 100% !important;
 }
-@media (max-width: 760px) {
-  #character-stage {
-    width: 82vw;
-    height: 48vh;
-    top: 30%;
+.stage-loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+.stage-loader.is-active {
+  opacity: 1;
+}
+.stage-loader__ring {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid rgba(76, 243, 255, 0.25);
+  border-top-color: var(--accent-cyan);
+  animation: stage-spin 0.9s linear infinite;
+}
+@keyframes stage-spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
@@ -83,12 +102,12 @@ body.is-projects #character-stage {
   z-index: 50;
   display: flex;
   gap: 4px;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.92);
   border: 1px solid var(--line);
   border-radius: 40px;
   padding: 6px;
   backdrop-filter: blur(10px);
-  box-shadow: 0 8px 24px rgba(34, 31, 26, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 .nav-pill__item {
   font-family: 'Space Grotesk', sans-serif;
@@ -110,60 +129,166 @@ body.is-projects #character-stage {
   color: var(--cream);
 }
 
-/* ---------- hero ---------- */
-.hero-section {
+/* ---------- CTA pill + locale switcher, grouped top-right ---------- */
+.top-right-controls {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.locale-switcher {
+  display: flex;
+  gap: 2px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  padding: 4px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+.locale-switcher__item {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  background: transparent;
+  border: none;
+  border-radius: 20px;
+  padding: 7px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.locale-switcher__item:hover {
+  color: var(--ink);
+}
+.locale-switcher__item.is-active {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.nav-cta {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  color: #1a0f05;
+  background: var(--accent-orange);
+  padding: 13px 22px;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(255, 138, 61, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.nav-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(255, 138, 61, 0.45);
+}
+@media (max-width: 760px) {
+  .nav-cta {
+    display: none;
+  }
+}
+
+/* ---------- beats: the 3D stage lives in a fixed band at the top (see
+   #journey-stage); every content card sits in NORMAL DOCUMENT FLOW below
+   that band's height, so cards stack and scroll naturally and never
+   overlap the character. Each beat still reserves a generous min-height so
+   one scroll "page" roughly equals one beat for the scroll-spy nav. ---- */
+main {
   position: relative;
   z-index: 10;
-  min-height: 100vh;
+  padding-top: var(--stage-band-height, 46vh);
+}
+.beat {
+  min-height: 70vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  padding: 110px 8vw 48px;
+}
+.beat:first-child {
+  min-height: 54vh;
+}
+
+.beat-card {
+  width: 100%;
+  max-width: 640px;
+  background: rgba(8, 14, 24, 0.86);
+  border: 1px solid rgba(76, 243, 255, 0.3);
+  border-radius: 18px;
+  padding: 32px 40px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  color: #eaf6ff;
+  overflow-wrap: break-word;
+}
+.beat-card--wide {
+  max-width: 920px;
+}
+.beat-card--center {
   text-align: center;
-  padding: 56px 24px 40px;
-  background: var(--cream);
-  pointer-events: none;
+  background: rgba(8, 14, 24, 0.72);
 }
-.hero-top {
-  max-width: 480px;
+@media (max-width: 760px) {
+  .beat {
+    padding: 36px 6vw;
+  }
+  .beat-card {
+    padding: 26px 24px;
+  }
 }
-.hero-bottom {
-  max-width: 480px;
-}
-.hero-section .eyebrow {
+
+.beat-card .eyebrow {
   font-family: 'JetBrains Mono', monospace;
   color: var(--accent-orange);
   letter-spacing: 0.12em;
   font-size: 0.78rem;
   text-transform: uppercase;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
-.hero-section h1 {
-  font-size: clamp(2.2rem, 7vw, 4.2rem);
+.beat-card h1 {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: clamp(2.4rem, 6vw, 4rem);
   font-weight: 800;
   margin: 0;
-  line-height: 1.08;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: #fff;
 }
-.hero-section h1 span {
+.beat-card h1 span {
   color: var(--accent-magenta);
 }
 .hero-subtitle {
-  font-size: clamp(1.3rem, 3.4vw, 1.8rem);
-  font-weight: 800;
-  margin: 0 0 14px;
+  display: inline-block;
+  font-family: 'Baloo 2', sans-serif;
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  font-weight: 700;
+  color: #fff;
+  background: var(--accent-orange);
+  padding: 8px 20px;
+  border-radius: 10px;
+  transform: rotate(-2deg);
+  margin: 16px 0 16px;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
 }
-.hero-section p {
+.beat-card--center p {
   max-width: 480px;
   margin: 0 auto;
-  color: var(--ink-soft);
+  color: #cfe3f0;
   font-size: 0.98rem;
   line-height: 1.6;
 }
 .scroll-hint {
-  margin-top: 22px;
+  margin-top: 20px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.78rem;
-  color: var(--ink-soft);
+  color: #8fb3c7;
   animation: bob 2s ease-in-out infinite;
 }
 @keyframes bob {
@@ -176,45 +301,11 @@ body.is-projects #character-stage {
   }
 }
 
-/* ---------- generic content sections ---------- */
-.content-section {
-  position: relative;
-  z-index: 10;
-  min-height: 100vh;
-  padding: 120px 8vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-#section-about {
-  background: var(--section-about);
-  color: #eaf6ff;
-}
-#section-experience {
-  background: var(--section-experience);
-  color: #eaf6ff;
-}
-#section-projects {
-  background: var(--section-projects);
-  color: var(--ink);
-}
-#section-skills {
-  background: var(--section-skills);
-  color: #eafff0;
-}
-#section-contact {
-  background: var(--section-contact);
-  color: var(--ink);
-}
-
-.section-heading {
-  margin-bottom: 56px;
-  pointer-events: none;
-}
-.section-heading h2 {
-  font-size: clamp(1.8rem, 4.2vw, 3rem);
+.beat-card h2 {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
   font-weight: 800;
-  margin: 10px 0 0;
+  margin: 12px 0 18px;
+  color: #fff;
 }
 .tag-pill {
   display: inline-block;
@@ -229,98 +320,17 @@ body.is-projects #character-stage {
   font-weight: 700;
 }
 
-/* ---------- side rail: generic content column that avoids the stage ---------- */
-.side-rail {
-  width: calc(50% - (var(--stage-width) / 2) - 10vw);
-  max-width: 480px;
-  min-width: 240px;
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-}
-.side-rail--left {
-  margin-right: auto;
-}
-.side-rail--right {
-  margin-left: auto;
-  text-align: right;
-}
-.side-rail--right .job {
-  border-left: none;
-  border-right: 2px solid rgba(76, 243, 255, 0.35);
-  padding: 4px 22px 26px 0;
-}
-.side-rail--right .job::before {
-  left: auto;
-  right: -6px;
-}
-.side-rail--right .tags {
-  justify-content: flex-end;
-}
-@media (max-width: 860px) {
-  .side-rail,
-  .side-rail--left,
-  .side-rail--right {
-    width: 88vw;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: left;
-  }
-  .side-rail--right .job {
-    border-left: 2px solid rgba(76, 243, 255, 0.35);
-    border-right: none;
-    padding: 4px 0 26px 22px;
-  }
-  .side-rail--right .job::before {
-    left: -6px;
-    right: auto;
-  }
-  .side-rail--right .tags {
-    justify-content: flex-start;
-  }
-}
-
-/* ---------- about: tooltip cards connected to the character ---------- */
-.tooltip-card {
-  position: relative;
-  background: rgba(10, 20, 35, 0.6);
-  border: 1px solid rgba(76, 243, 255, 0.35);
-  border-radius: 12px;
-  padding: 18px 22px;
-  backdrop-filter: blur(8px);
-  pointer-events: none;
-  overflow-wrap: break-word;
-}
-.tooltip-card::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  right: -120px;
-  width: 110px;
-  height: 1px;
-  background: linear-gradient(to right, rgba(76, 243, 255, 0.6), transparent);
-}
-@media (max-width: 860px) {
-  .tooltip-card::after {
-    display: none;
-  }
-}
-.tc-name {
+.beat-card__identity {
   font-family: 'Baloo 2', sans-serif;
   font-weight: 700;
   font-size: 1.3rem;
-  margin-bottom: 4px;
-}
-.tc-role {
-  color: var(--accent-cyan);
-  font-size: 0.85rem;
-  font-family: 'JetBrains Mono', monospace;
+  margin: 14px 0 4px;
+  color: #fff;
 }
 .tc-body p {
   margin: 0 0 12px;
-  font-size: 0.92rem;
-  line-height: 1.6;
+  font-size: 0.94rem;
+  line-height: 1.65;
   color: #cfe3f0;
 }
 .tc-body p:last-child {
@@ -335,7 +345,7 @@ body.is-projects #character-stage {
 }
 .job {
   border-left: 2px solid rgba(76, 243, 255, 0.35);
-  padding: 4px 0 26px 22px;
+  padding: 4px 0 24px 22px;
   position: relative;
 }
 .job::before {
@@ -351,17 +361,18 @@ body.is-projects #character-stage {
 }
 .job h3 {
   margin: 0 0 4px;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
+  color: #fff;
 }
 .job .meta {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
   color: #8fb3c7;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .job p {
   margin: 0 0 10px;
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   line-height: 1.6;
   color: #cfe3f0;
 }
@@ -373,7 +384,7 @@ body.is-projects #character-stage {
 .tag {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.68rem;
-  background: rgba(76, 243, 255, 0.1);
+  background: rgba(76, 243, 255, 0.12);
   border: 1px solid rgba(76, 243, 255, 0.3);
   color: var(--accent-cyan);
   padding: 4px 10px;
@@ -381,22 +392,14 @@ body.is-projects #character-stage {
 }
 
 /* ---------- projects grid ---------- */
-.content-section--wide {
-  align-items: center;
-}
-.projects-wide {
-  width: 100%;
-  max-width: 1040px;
-  margin: 0 auto;
-}
 .proj-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 18px;
+  gap: 16px;
 }
 .proj-grid--wide {
   grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+  gap: 18px;
 }
 @media (max-width: 760px) {
   .proj-grid--wide {
@@ -404,19 +407,19 @@ body.is-projects #character-stage {
   }
 }
 .proj-card {
-  background: var(--card);
-  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(34, 31, 26, 0.08);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.25s ease, background 0.25s ease;
 }
 .proj-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 40px rgba(34, 31, 26, 0.14);
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.1);
 }
 .proj-tile {
   --tile-color: #4cf3ff;
-  height: 140px;
+  height: 110px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -425,32 +428,33 @@ body.is-projects #character-stage {
 .proj-tile span {
   font-family: 'Baloo 2', sans-serif;
   font-weight: 800;
-  font-size: 2.4rem;
+  font-size: 2.1rem;
   color: rgba(255, 255, 255, 0.92);
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
 }
 .proj-card .org {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.66rem;
+  font-size: 0.64rem;
   color: var(--accent-magenta);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin: 16px 20px 0;
+  margin: 14px 16px 0;
 }
 .proj-card h4 {
-  margin: 6px 20px 8px;
-  font-size: 1.05rem;
+  margin: 6px 16px 6px;
+  font-size: 0.98rem;
+  color: #fff;
 }
 .proj-card p {
-  margin: 0 20px 20px;
-  font-size: 0.86rem;
-  color: var(--ink-soft);
-  line-height: 1.55;
+  margin: 0 16px 16px;
+  font-size: 0.82rem;
+  color: #cfe3f0;
+  line-height: 1.5;
 }
 
 /* ---------- skills ---------- */
 .skill-group {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 .skill-group h4 {
   font-family: 'JetBrains Mono', monospace;
@@ -460,11 +464,8 @@ body.is-projects #character-stage {
   letter-spacing: 0.06em;
   margin: 0 0 10px;
 }
-.skills-list .tags {
-  justify-content: flex-end;
-}
 .skills-list .tag {
-  background: rgba(140, 255, 170, 0.1);
+  background: rgba(140, 255, 170, 0.12);
   border-color: rgba(140, 255, 170, 0.3);
   color: #8fe0a8;
 }
@@ -473,12 +474,9 @@ body.is-projects #character-stage {
 .contact-list {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
   width: 100%;
-  background: var(--card);
-  border-radius: 18px;
-  padding: 28px 28px;
-  box-shadow: 0 10px 30px rgba(34, 31, 26, 0.08);
+  max-width: 400px;
 }
 .contact-row {
   display: flex;
@@ -487,16 +485,23 @@ body.is-projects #character-stage {
   min-width: 0;
 }
 .contact-row a {
-  color: var(--ink);
+  color: #fff;
   text-decoration: none;
   font-weight: 600;
-  border-bottom: 1px dashed var(--line);
+  font-size: 0.9rem;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
   padding-bottom: 2px;
   overflow-wrap: anywhere;
-  word-break: break-word;
+  line-height: 1.5;
+  hyphens: auto;
 }
 .contact-row a:hover {
   color: var(--accent-magenta);
+}
+.contact-row span {
+  color: #cfe3f0;
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 .contact-list .ico {
   width: 22px;
@@ -506,7 +511,7 @@ body.is-projects #character-stage {
 }
 .contact-note {
   font-size: 0.86rem;
-  color: var(--ink-soft);
+  color: #8fb3c7;
   margin: 4px 0 0;
 }
 
@@ -516,10 +521,108 @@ body.is-projects #character-stage {
   z-index: 10;
   text-align: center;
   padding: 28px;
-  background: var(--section-contact);
-  color: var(--ink-soft);
+  background: #0b1420;
+  color: #8fb3c7;
   font-size: 0.8rem;
   font-family: 'JetBrains Mono', monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.footer-legal-link {
+  background: none;
+  border: none;
+  color: #8fb3c7;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.74rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+.footer-legal-link:hover {
+  color: #fff;
+}
+
+/* ---------- Privacy & Legal Notice modal ---------- */
+.legal-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(5, 9, 15, 0.72);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.legal-modal-overlay[hidden] {
+  display: none;
+}
+.legal-modal {
+  background: #0f1826;
+  border: 1px solid rgba(76, 243, 255, 0.25);
+  border-radius: 18px;
+  max-width: 640px;
+  width: 100%;
+  max-height: 84vh;
+  overflow-y: auto;
+  padding: 36px 40px;
+  position: relative;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
+  color: #eaf6ff;
+}
+.legal-modal:focus {
+  outline: none;
+}
+.legal-modal__close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: #eaf6ff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+}
+.legal-modal__close:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+.legal-modal__title {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 1.6rem;
+  margin: 0 28px 4px 0;
+  color: #fff;
+}
+.legal-modal__updated {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.74rem;
+  color: #8fb3c7;
+  margin: 0 0 24px;
+}
+.legal-modal__body h3 {
+  font-size: 1rem;
+  color: var(--accent-cyan);
+  margin: 22px 0 8px;
+}
+.legal-modal__body h3:first-child {
+  margin-top: 0;
+}
+.legal-modal__body p {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: #cfe3f0;
+  margin: 0 0 10px;
+}
+@media (max-width: 600px) {
+  .legal-modal {
+    padding: 28px 22px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

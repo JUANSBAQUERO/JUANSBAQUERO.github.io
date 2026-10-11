@@ -12,70 +12,66 @@
 </head>
 <body>
 
-<div id="character-stage"></div>
+<div id="journey-stage">
+  <div class="stage-loader" id="stageLoader"><div class="stage-loader__ring"></div></div>
+</div>
 
 <nav id="navPill" class="nav-pill"></nav>
+<div class="top-right-controls">
+  <div class="locale-switcher" id="localeSwitcher">
+    <button class="locale-switcher__item" data-locale="en" type="button">EN</button>
+    <button class="locale-switcher__item" data-locale="es" type="button">ES</button>
+  </div>
+  <button class="nav-cta" id="navCta" type="button"></button>
+</div>
 
 <main id="scrollRoot">
 
-  <section class="hero-section" id="section-hero">
-    <div class="hero-top">
-      <div class="eyebrow">Interactive 3D Portfolio</div>
-      <h1>Hi, I'm <span>Juan</span></h1>
-    </div>
-    <div class="hero-bottom">
-      <h2 class="hero-subtitle">I build full-stack software.</h2>
-      <p>Scroll down to meet me — 7+ years shipping web &amp; mobile products, from fintech wallets to AI-driven SaaS.</p>
-      <div class="scroll-hint">↓ scroll</div>
+  <section class="beat" id="beat-hero" data-beat="hero">
+    <div class="beat-card beat-card--center">
+      <div class="eyebrow" id="heroEyebrow"></div>
+      <h1 id="heroGreeting"></h1>
+      <h2 class="hero-subtitle" id="heroSubtitle"></h2>
+      <p id="heroBody"></p>
+      <div class="scroll-hint" id="heroScrollHint"></div>
     </div>
   </section>
 
-  <section class="content-section" id="section-about" data-station="about">
-    <div class="side-rail side-rail--left">
-      <div class="tooltip-card">
-        <div id="tcAboutName"></div>
-      </div>
-      <div class="tooltip-card">
-        <div id="tcAboutBody" class="tc-body"></div>
-      </div>
+  <section class="beat" id="beat-about" data-beat="about">
+    <div class="beat-card">
+      <div class="tag-pill" id="aboutTag"></div>
+      <div id="tcAboutName" class="beat-card__identity"></div>
+      <div id="tcAboutBody" class="tc-body"></div>
     </div>
   </section>
 
-  <section class="content-section" id="section-experience" data-station="experience">
-    <div class="side-rail side-rail--right">
-      <div class="section-heading">
-        <div class="tag-pill">Career</div>
-        <h2>Experience</h2>
-      </div>
+  <section class="beat" id="beat-experience" data-beat="experience">
+    <div class="beat-card beat-card--wide">
+      <div class="tag-pill" id="experienceTag"></div>
+      <h2 id="experienceHeading"></h2>
       <div class="experience-list" id="experienceList"></div>
     </div>
   </section>
 
-  <section class="content-section content-section--wide" id="section-projects" data-station="projects">
-    <div class="projects-wide">
-      <div class="section-heading">
-        <div class="tag-pill">Selected</div>
-        <h2>Projects</h2>
-      </div>
+  <section class="beat" id="beat-projects" data-beat="projects">
+    <div class="beat-card beat-card--wide">
+      <div class="tag-pill" id="projectsTag"></div>
+      <h2 id="projectsHeading"></h2>
       <div class="proj-grid proj-grid--wide" id="projectsGrid"></div>
     </div>
   </section>
 
-  <section class="content-section" id="section-skills" data-station="skills">
-    <div class="side-rail side-rail--right">
-      <div class="section-heading">
-        <div class="tag-pill">Toolbox</div>
-        <h2>Skills &amp; Stack</h2>
-      </div>
+  <section class="beat" id="beat-skills" data-beat="skills">
+    <div class="beat-card beat-card--wide">
+      <div class="tag-pill" id="skillsTag"></div>
+      <h2 id="skillsHeading"></h2>
       <div class="skills-list" id="skillsList"></div>
     </div>
   </section>
 
-  <section class="content-section" id="section-contact" data-station="contact">
-    <div class="side-rail side-rail--left">
-      <div class="section-heading">
-        <h2>Let's build<br>something<br>together.</h2>
-      </div>
+  <section class="beat" id="beat-contact" data-beat="contact">
+    <div class="beat-card">
+      <h2 id="contactHeading"></h2>
       <div class="contact-list" id="contactList"></div>
     </div>
   </section>
@@ -84,6 +80,7 @@
 
 <footer class="site-footer">
   <span>© 2026 Juan Sebastián Baquero</span>
+  <button class="footer-legal-link" id="legalLink" type="button"></button>
 </footer>
 
 <script type="module" src="/src/main.ts"></script>
