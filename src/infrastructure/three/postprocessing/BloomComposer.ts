@@ -18,9 +18,12 @@ export function createBloomComposer(
 
   const bloom = new UnrealBloomPass(
     new THREE.Vector2(window.innerWidth, window.innerHeight),
-    0.45, // strength
-    0.5, // radius
-    0.78, // threshold — only strongly emissive/bright pixels (rings, scan FX) bloom
+    0.22, // strength — kept low: a bright cream/white backdrop (Hero, Projects,
+    // Contact) exceeds the luminance threshold on its own and blooms the
+    // whole frame, washing out the character's flat colors. Low strength
+    // keeps the cyan ring/scan-line glow visible without that wash-out.
+    0.4, // radius
+    0.85, // threshold — only strongly emissive pixels (rings, scan FX) bloom
   );
   composer.addPass(bloom);
   composer.addPass(new OutputPass());

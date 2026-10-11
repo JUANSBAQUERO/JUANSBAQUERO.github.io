@@ -5,6 +5,7 @@ import { CharacterStage } from './character/CharacterStage';
 import { buildStageEnvironment } from './character/StageEnvironment';
 import { poseForStation } from '../../application/services/CharacterPoseService';
 import { stageBackgroundForStation } from '../../application/services/StageBackground';
+import { isCharacterVisibleForStation } from '../../application/services/CharacterVisibility';
 import type { StationKey } from '../../domain/entities/Station';
 
 /**
@@ -74,6 +75,7 @@ export class CharacterScene {
   setActiveStation(key: StationKey | null): void {
     this.stage.setTargetPose(poseForStation(key));
     this.targetClearColor.set(stageBackgroundForStation(key));
+    this.stage.rig.group.visible = isCharacterVisibleForStation(key);
   }
 
   private containerSize(): { width: number; height: number } {

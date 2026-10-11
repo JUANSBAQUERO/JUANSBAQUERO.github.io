@@ -51,11 +51,15 @@ h4 {
   border-radius: 28px;
   overflow: hidden;
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.18);
-  transition: box-shadow 0.4s ease, width 0.4s ease, height 0.4s ease;
+  opacity: 1;
+  transition: box-shadow 0.4s ease, width 0.4s ease, height 0.4s ease, opacity 0.5s ease;
 }
 body.is-hero #character-stage {
   width: min(30vw, 340px);
   height: min(42vh, 380px);
+}
+body.is-projects #character-stage {
+  opacity: 0;
 }
 #character-stage canvas {
   display: block;
@@ -377,13 +381,27 @@ body.is-hero #character-stage {
 }
 
 /* ---------- projects grid ---------- */
-.side-rail--projects {
-  max-width: 420px;
+.content-section--wide {
+  align-items: center;
+}
+.projects-wide {
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
 }
 .proj-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 18px;
+}
+.proj-grid--wide {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+@media (max-width: 760px) {
+  .proj-grid--wide {
+    grid-template-columns: 1fr;
+  }
 }
 .proj-card {
   background: var(--card);

@@ -1,5 +1,6 @@
 import { StaticContentRepository } from './infrastructure/content/StaticContentRepository';
 import { CharacterScene } from './infrastructure/three/CharacterScene';
+import { SmoothScroll } from './infrastructure/scroll/SmoothScroll';
 import { NavPillView } from './presentation/nav/NavPillView';
 import { computeActiveSectionKey, type ScrollSection } from './application/services/ScrollSpy';
 import {
@@ -33,11 +34,13 @@ function bootstrap(): void {
   const content = new StaticContentRepository();
   const scene = new CharacterScene(stageEl);
   const nav = new NavPillView();
+  const smoothScroll = new SmoothScroll();
 
   populateContent(content);
 
   nav.onNavigate = (key) => {
-    document.getElementById(`section-${key}`)?.scrollIntoView({ behavior: 'smooth' });
+    const target = document.getElementById(`section-${key}`);
+    if (target) smoothScroll.scrollTo(target);
   };
 
   const sectionEls = SECTION_KEYS.map((key) => document.getElementById(`section-${key}`)).filter(
@@ -64,13 +67,15 @@ function bootstrap(): void {
       nav.setActive(activeKey);
       scene.setActiveStation(activeKey);
       document.body.classList.toggle('is-hero', activeKey === null);
+      document.body.classList.toggle('is-projects', activeKey === 'projects');
     }
   }
 
-  window.addEventListener('scroll', updateActiveSection, { passive: true });
   window.addEventListener('resize', updateActiveSection);
+  smoothScroll.onScroll(updateActiveSection);
 
   scene.start();
+  smoothScroll.start();
   updateActiveSection();
 }
 
