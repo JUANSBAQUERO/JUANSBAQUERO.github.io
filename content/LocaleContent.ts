@@ -14,6 +14,7 @@ export interface UiStrings {
   readonly cta: string;
   readonly hero: {
     readonly eyebrow: string;
+    readonly availability: string; // small badge: "Open to full-time roles & freelance"
     readonly greetingPrefix: string; // "Hi, I'm " / "Hola, soy "
     readonly name: string;
     readonly subtitle: string;

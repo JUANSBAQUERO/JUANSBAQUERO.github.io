@@ -14,6 +14,7 @@ const SECTION_ORDER: readonly StationKey[] = ['about', 'experience', 'projects',
  */
 export class NavPillView {
   private readonly root = this.byId('navPill');
+  private readonly toggle = document.getElementById('navToggle') as HTMLButtonElement | null;
   private readonly buttons = new Map<StationKey, HTMLButtonElement>();
 
   constructor(labels: Record<StationKey, string>) {
@@ -22,10 +23,23 @@ export class NavPillView {
       btn.className = 'nav-pill__item';
       btn.textContent = labels[key];
       btn.dataset.station = key;
-      btn.addEventListener('click', () => this.onNavigate?.(key));
+      btn.addEventListener('click', () => {
+        this.onNavigate?.(key);
+        this.close();
+      });
       this.root.appendChild(btn);
       this.buttons.set(key, btn);
     }
+
+    // Mobile-only hamburger: the pill itself is the dropdown, hidden until
+    // toggled open (see main.css @media max-width: 680px). Desktop never
+    // shows the toggle button, so this listener is simply inert there.
+    this.toggle?.addEventListener('click', () => this.toggleOpen());
+    document.addEventListener('click', (e) => {
+      if (!this.isOpen()) return;
+      const target = e.target as Node;
+      if (!this.root.contains(target) && !this.toggle?.contains(target)) this.close();
+    });
   }
 
   onNavigate: ((key: StationKey) => void) | null = null;
@@ -48,5 +62,23 @@ export class NavPillView {
     const el = document.getElementById(id);
     if (!el) throw new Error(`NavPillView: missing #${id} in DOM`);
     return el;
+  }
+
+  private isOpen(): boolean {
+    return this.root.classList.contains('is-open');
+  }
+
+  private toggleOpen(): void {
+    this.isOpen() ? this.close() : this.open();
+  }
+
+  private open(): void {
+    this.root.classList.add('is-open');
+    this.toggle?.setAttribute('aria-expanded', 'true');
+  }
+
+  private close(): void {
+    this.root.classList.remove('is-open');
+    this.toggle?.setAttribute('aria-expanded', 'false');
   }
 }

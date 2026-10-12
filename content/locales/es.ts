@@ -13,6 +13,7 @@ export const es: LocaleContent = {
     cta: 'Contáctame',
     hero: {
       eyebrow: 'Portafolio 3D Interactivo',
+      availability: '🟢 Abierto a empleo full-time y proyectos freelance',
       greetingPrefix: 'Hola, soy ',
       name: 'Juan',
       subtitle: 'Construyo software full-stack.',

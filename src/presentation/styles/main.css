@@ -137,12 +137,12 @@ h4 {
   background: var(--ink);
   color: var(--cream);
 }
-/* Below ~680px the nav pill (5 items) and the top-right controls (locale
-   switcher + CTA) both fight for the same first viewport row and start
-   colliding/clipping each other. Stack the nav pill BELOW the top-right
-   controls (two-row layout) and let items WRAP onto a second line instead
-   of relying on hidden horizontal scroll -- a cut-off last label with no
-   visible scrollbar reads as a layout bug, not an affordance to scroll. */
+/* Below ~680px the white nav pill dominated the first screen visually --
+   feedback from a real mobile visitor: eyes went straight to the white
+   menu bar and it took a moment to realize it was even a portfolio, not
+   just chrome. Collapse it into a small dark hamburger icon instead (see
+   .nav-toggle below); the pill itself becomes a dropdown shown only while
+   open, so the hero content underneath is the first thing visitors see. */
 @media (max-width: 680px) {
   .nav-pill {
     top: 64px;
@@ -151,20 +151,82 @@ h4 {
     transform: none;
     max-width: none;
     overflow-x: visible;
-    flex-wrap: wrap;
-    justify-content: center;
-    border-radius: 20px;
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: 16px;
+    background: rgba(11, 20, 32, 0.96);
+    border-color: rgba(76, 243, 255, 0.25);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    display: none;
+  }
+  .nav-pill.is-open {
+    display: flex;
   }
   .nav-pill__item {
-    padding: 7px 12px;
-    font-size: 0.74rem;
+    color: #cfe3f0;
+    text-align: left;
+    padding: 12px 16px;
   }
-  /* The nav pill grows to two rows at this width, so its bottom edge sits
-     lower than the fixed 3D stage's own height -- without extra top
-     padding here, the hero heading renders partially behind the nav
-     pill's second row. */
-  main {
-    padding-top: calc(var(--stage-band-height, 46vh) + 56px);
+  .nav-pill__item:hover {
+    color: #fff;
+  }
+  .nav-pill__item.is-active {
+    background: rgba(76, 243, 255, 0.14);
+    color: var(--accent-cyan);
+  }
+}
+@media (min-width: 681px) {
+  .nav-toggle {
+    display: none;
+  }
+}
+
+/* ---------- mobile hamburger toggle (replaces the white pill as the
+   first-impression nav element below 680px) ---------- */
+.nav-toggle {
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 51;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(76, 243, 255, 0.25);
+  background: rgba(11, 20, 32, 0.88);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  padding: 0;
+}
+.nav-toggle__bar {
+  width: 18px;
+  height: 2px;
+  border-radius: 2px;
+  background: #eaf6ff;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.nav-toggle[aria-expanded='true'] .nav-toggle__bar:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.nav-toggle[aria-expanded='true'] .nav-toggle__bar:nth-child(2) {
+  opacity: 0;
+}
+.nav-toggle[aria-expanded='true'] .nav-toggle__bar:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+/* Re-assert hidden-on-desktop AFTER the base rule above -- same selector
+   specificity means source order decides the winner in the cascade, so
+   this second min-width block (not the one before the base rule) is what
+   actually keeps the toggle hidden above 680px. Without it the hamburger
+   icon showed on desktop too, floating uselessly next to the full pill. */
+@media (min-width: 681px) {
+  .nav-toggle {
+    display: none;
   }
 }
 
@@ -281,6 +343,21 @@ main {
   .beat-card {
     padding: 26px 24px;
   }
+  /* Feedback from a mobile visitor: the hero's small eyebrow label was the
+     first thing in reading order, delaying "Hi, I'm Juan" below the fold
+     of a quick glance. Reorder (not restyle) so the greeting is the very
+     first thing visible, eyebrow becomes a small kicker right under it. */
+  #beat-hero .beat-card--center {
+    display: flex;
+    flex-direction: column;
+  }
+  #beat-hero #heroGreeting {
+    order: -2;
+  }
+  #beat-hero #heroEyebrow {
+    order: -1;
+    margin-top: 10px;
+  }
 }
 
 .beat-card .eyebrow {
@@ -302,6 +379,20 @@ main {
 }
 .beat-card h1 span {
   color: var(--accent-magenta);
+}
+.hero-availability {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.74rem;
+  letter-spacing: 0.02em;
+  color: #8fe0a8;
+  background: rgba(140, 255, 170, 0.1);
+  border: 1px solid rgba(140, 255, 170, 0.3);
+  border-radius: 20px;
+  padding: 6px 14px;
+  margin-top: 14px;
 }
 .hero-subtitle {
   display: inline-block;
@@ -607,6 +698,8 @@ main {
   width: 100%;
   max-height: 84vh;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
   padding: 36px 40px;
   position: relative;
   box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);

@@ -29,6 +29,14 @@ export class LegalModal {
     this.panel.setAttribute('role', 'dialog');
     this.panel.setAttribute('aria-modal', 'true');
     this.panel.tabIndex = -1;
+    // Tells Lenis (the page's smooth-scroll library) to ignore touch/wheel
+    // gestures that start inside this element entirely, letting the
+    // browser's native overflow-y scroll handle them -- see the wheel
+    // listener below for why `stopPropagation` alone isn't enough on
+    // mobile (Lenis captures touch events on `window`, not via bubbling
+    // through this panel, so wheel-only stopPropagation never touched the
+    // touch-scroll path and the modal was unscrollable on phones).
+    this.panel.setAttribute('data-lenis-prevent', '');
 
     this.closeBtn = document.createElement('button');
     this.closeBtn.className = 'legal-modal__close';

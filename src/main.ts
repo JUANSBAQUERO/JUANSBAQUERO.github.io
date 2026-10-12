@@ -145,6 +145,7 @@ function applyLocale(locale: Locale, nav: NavPillView, legalModal: LegalModal): 
 
   setText('heroEyebrow', content.ui.hero.eyebrow);
   setHtml('heroGreeting', `${content.ui.hero.greetingPrefix}<span>${content.ui.hero.name}</span>`);
+  setText('heroAvailability', content.ui.hero.availability);
   setText('heroSubtitle', content.ui.hero.subtitle);
   setText('heroBody', content.ui.hero.body);
   setText('heroScrollHint', content.ui.hero.scrollHint);

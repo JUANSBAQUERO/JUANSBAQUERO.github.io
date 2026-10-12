@@ -14,6 +14,7 @@ export const en: LocaleContent = {
     cta: 'Get in touch',
     hero: {
       eyebrow: 'Interactive 3D Portfolio',
+      availability: '🟢 Open to full-time roles & freelance projects',
       greetingPrefix: "Hi, I'm ",
       name: 'Juan',
       subtitle: 'I build full-stack software.',
