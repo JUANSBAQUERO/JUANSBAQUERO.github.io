@@ -26,6 +26,19 @@ export class SmoothScroll {
     this.lenis.scrollTo(target, { duration: 1.2 });
   }
 
+  /** Pauses Lenis's own wheel/touch capture so an overlay's native
+   *  scrollable content (e.g. a modal body with overflow-y: auto) can
+   *  receive wheel events normally -- Lenis listens on the whole document
+   *  by default, so without this an open modal's internal scroll fights
+   *  the page's smooth-scroll underneath it. */
+  pause(): void {
+    this.lenis.stop();
+  }
+
+  resume(): void {
+    this.lenis.start();
+  }
+
   start(): void {
     this.frameHandle = requestAnimationFrame(this.raf);
   }

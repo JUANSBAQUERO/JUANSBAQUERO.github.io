@@ -67,6 +67,10 @@ function bootstrap(): void {
   });
 
   document.getElementById('legalLink')?.addEventListener('click', () => legalModal.show());
+  legalModal.setScrollHooks(
+    () => smoothScroll.pause(),
+    () => smoothScroll.resume(),
+  );
 
   nav.onNavigate = (key) => {
     const target = document.getElementById(`beat-${key}`);

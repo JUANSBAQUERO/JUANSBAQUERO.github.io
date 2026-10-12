@@ -15,6 +15,8 @@ export class LegalModal {
   private readonly bodyEl: HTMLDivElement;
   private readonly closeBtn: HTMLButtonElement;
   private lastFocusedBeforeOpen: HTMLElement | null = null;
+  private onShow: (() => void) | null = null;
+  private onHide: (() => void) | null = null;
 
   constructor() {
     this.overlay = document.createElement('div');
@@ -57,6 +59,14 @@ export class LegalModal {
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && !this.overlay.hidden) this.hide();
     });
+    // Lenis (the page's smooth-scroll library) listens for `wheel` on the
+    // whole window and intercepts it even while stopped -- it just skips
+    // moving window scroll, but the event still never reaches this panel's
+    // native overflow-y scroll in the normal way, so wheeling over the
+    // modal body did nothing. Stopping propagation here keeps the wheel
+    // event local to the panel, where the browser's native scroll handles
+    // it correctly.
+    this.panel.addEventListener('wheel', (e) => e.stopPropagation(), { passive: true });
   }
 
   /** Re-renders the modal's text for the given locale's legal content --
@@ -77,6 +87,15 @@ export class LegalModal {
       .join('');
   }
 
+  /** Registers callbacks run when the modal opens/closes -- used by the
+   *  caller to pause/resume the page's Lenis smooth-scroll instance so it
+   *  doesn't fight the modal body's native overflow-y scroll while open
+   *  (see SmoothScroll.pause/resume). */
+  setScrollHooks(onShow: () => void, onHide: () => void): void {
+    this.onShow = onShow;
+    this.onHide = onHide;
+  }
+
   show(): void {
     this.lastFocusedBeforeOpen = document.activeElement as HTMLElement | null;
     this.overlay.hidden = false;
@@ -85,12 +104,14 @@ export class LegalModal {
     // some browsers).
     requestAnimationFrame(() => this.panel.focus());
     document.body.style.overflow = 'hidden';
+    this.onShow?.();
   }
 
   hide(): void {
     this.overlay.hidden = true;
     document.body.style.overflow = '';
     this.lastFocusedBeforeOpen?.focus();
+    this.onHide?.();
   }
 }
 
