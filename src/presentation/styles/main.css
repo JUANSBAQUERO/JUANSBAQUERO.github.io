@@ -96,7 +96,7 @@ h4 {
 /* ---------- floating nav pill ---------- */
 .nav-pill {
   position: fixed;
-  top: 24px;
+  top: 14px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 50;
@@ -108,6 +108,13 @@ h4 {
   padding: 6px;
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  max-width: calc(100vw - 24px);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.nav-pill::-webkit-scrollbar {
+  display: none;
 }
 .nav-pill__item {
   font-family: 'Space Grotesk', sans-serif;
@@ -120,6 +127,8 @@ h4 {
   padding: 9px 18px;
   cursor: pointer;
   transition: all 0.25s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .nav-pill__item:hover {
   color: var(--ink);
@@ -128,12 +137,42 @@ h4 {
   background: var(--ink);
   color: var(--cream);
 }
+/* Below ~680px the nav pill (5 items) and the top-right controls (locale
+   switcher + CTA) both fight for the same first viewport row and start
+   colliding/clipping each other. Stack the nav pill BELOW the top-right
+   controls (two-row layout) and let items WRAP onto a second line instead
+   of relying on hidden horizontal scroll -- a cut-off last label with no
+   visible scrollbar reads as a layout bug, not an affordance to scroll. */
+@media (max-width: 680px) {
+  .nav-pill {
+    top: 64px;
+    left: 12px;
+    right: 12px;
+    transform: none;
+    max-width: none;
+    overflow-x: visible;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-radius: 20px;
+  }
+  .nav-pill__item {
+    padding: 7px 12px;
+    font-size: 0.74rem;
+  }
+  /* The nav pill grows to two rows at this width, so its bottom edge sits
+     lower than the fixed 3D stage's own height -- without extra top
+     padding here, the hero heading renders partially behind the nav
+     pill's second row. */
+  main {
+    padding-top: calc(var(--stage-band-height, 46vh) + 56px);
+  }
+}
 
 /* ---------- CTA pill + locale switcher, grouped top-right ---------- */
 .top-right-controls {
   position: fixed;
-  top: 24px;
-  right: 24px;
+  top: 14px;
+  right: 14px;
   z-index: 50;
   display: flex;
   align-items: center;
