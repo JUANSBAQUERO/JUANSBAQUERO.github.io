@@ -13,7 +13,7 @@
  * the beat determines which content card is shown.
  */
 
-export type JourneySceneKey = 'walk' | 'run' | 'crash' | 'bow';
+export type JourneySceneKey = 'walk' | 'run' | 'crash' | 'standup' | 'bow';
 
 export interface JourneyScene {
   readonly key: JourneySceneKey;
