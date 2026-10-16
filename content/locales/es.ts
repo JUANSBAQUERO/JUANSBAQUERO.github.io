@@ -177,8 +177,8 @@ export const es: LocaleContent = {
       },
       {
         icon: 'in',
-        label: 'linkedin.com/in/juan-sebastian',
-        href: 'https://linkedin.com/in/juan-sebastian',
+        label: 'linkedin.com/in/juan-sebastian-baquero-moreno-5146191b4',
+        href: 'https://www.linkedin.com/in/juan-sebastian-baquero-moreno-5146191b4',
       },
       { icon: '◍', label: 'Bogotá, Colombia — abierto a trabajo remoto en cualquier lugar' },
     ],
