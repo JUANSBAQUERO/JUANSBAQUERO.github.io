@@ -52,6 +52,10 @@ export interface UiStrings {
    *  one picked at random per click, never twice in a row. Brand-voice
    *  easter egg, not functional copy -- keep these short and punchy. */
   readonly characterReactions: readonly string[];
+  /** Floating WhatsApp button: accessible label + prefilled chat message
+   *  (URL-encoded at render time, not here). */
+  readonly whatsappLabel: string;
+  readonly whatsappMessage: string;
 }
 
 /** Content for the Privacy & Legal Notice popup (see LegalModal.ts). Plain

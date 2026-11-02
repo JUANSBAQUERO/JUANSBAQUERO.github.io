@@ -5,20 +5,19 @@ agrega al abrir el PR y se elimina al mergearlo (el histórico completo
 queda en `.agents/SDD/contracts/` y en `git log`). Ver
 `.agents/rules/documentation-policy.md` para el formato.
 
-## PR — feat: brand identity refresh (color palette + favicon)
+## PR — feat: floating WhatsApp button with chibi-style idle bounce
 
-**feat:** reemplaza la paleta cian/magenta neón por un sistema de marca
-juguetón (naranja ancla sin cambio + rosa chicle + mostaza) coherente con
-la escena 3D real (atardecer, lámparas), y evoluciona el favicon de
-iniciales genéricas "JB" a una silueta del personaje chibi.
+**feat:** botón flotante de WhatsApp (fixed, esquina inferior derecha)
+con link precargado al número real de Juan, estilo chibi/juguetón (rosa
+chicle con rebote idle continuo, naranja en hover), consistente con la
+paleta del brand refresh.
 
-**bug:** N/A — refresh de identidad visual, no corrige un defecto.
+**bug:** N/A — feature nueva.
 
-**cómo verificar:** cargar el sitio, confirmar que "Juan" en el hero es
-rosa chicle (no magenta neón), que Lab se mantiene naranja, que
-Skills/About/Experience usan mostaza y Projects/Contact rosa, en EN/ES y
-mobile; revisar el favicon de la pestaña (silueta de cabeza, no "JB").
+**cómo verificar:** cargar el sitio, confirmar el botón visible en todas
+las secciones con rebote sutil; hover cambia a naranja; click abre
+WhatsApp con mensaje precargado; cambiar idioma EN/ES actualiza el
+mensaje; mobile se ve proporcional; el modal legal sigue tapándolo.
 
-PR: https://github.com/JUANSBAQUERO/JUANSBAQUERO.github.io/pull/5 ·
-Contrato: `.agents/SDD/contracts/brand-identity-refresh.md` · Spec:
-`.agents/BRAND.md`
+PR: https://github.com/JUANSBAQUERO/JUANSBAQUERO.github.io/pull/6 ·
+Contrato: `.agents/SDD/contracts/whatsapp-floating-button.md`

@@ -44,6 +44,8 @@ export const en: LocaleContent = {
       'New experience unlocked: being poked.',
       "I'd shake your hand but I'm 2D-rigged for that.",
     ],
+    whatsappLabel: 'Chat on WhatsApp',
+    whatsappMessage: "Hi Juan! I saw your portfolio and I'd like to talk.",
   },
 
   about: {

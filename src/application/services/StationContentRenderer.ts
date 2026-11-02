@@ -102,3 +102,12 @@ export function renderLabEntries(content: LabContent): string {
     )
     .join('');
 }
+
+/** wa.me deep link: phone MUST be E.164 digits only (no "+", spaces or
+ *  dashes) per WhatsApp's own click-to-chat spec, and the prefilled
+ *  message is query-encoded so quotes/accents/emoji in it never break
+ *  the URL. Pure function (no DOM) so it's unit-testable without jsdom,
+ *  same pattern as every other renderer in this file. */
+export function buildWhatsappHref(phoneE164Digits: string, message: string): string {
+  return `https://wa.me/${phoneE164Digits}?text=${encodeURIComponent(message)}`;
+}

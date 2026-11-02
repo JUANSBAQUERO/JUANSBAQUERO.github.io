@@ -16,12 +16,14 @@ import {
   renderLabEntries,
   renderProjectCards,
   renderSkillGroups,
+  buildWhatsappHref,
 } from './application/services/StationContentRenderer';
 import { wrapLastWordAccent } from './application/services/EditorialAccent';
 import { resolveInitialLocale, LocalePreference } from './application/services/LocalePreference';
 import { SUPPORTED_LOCALES, type Locale } from './domain/entities/Locale';
 import type { StationKey } from './domain/entities/Station';
 import { journeyBeats, journeyScenes } from '../content/journey';
+import { WHATSAPP_PHONE_E164 } from '../content/portfolio';
 import { getLocaleContent } from '../content/locales/index';
 import { LegalModal } from './presentation/legal/LegalModal';
 import { ProjectModal } from './presentation/projects/ProjectModal';
@@ -285,6 +287,12 @@ function applyLocale(locale: Locale, nav: NavPillView, legalModal: LegalModal): 
 
   setText('stageLoaderCaption', content.ui.stageLoadingCaption);
   setText('stageClickHint', content.ui.characterClickHint);
+
+  const whatsappFloat = document.getElementById('whatsappFloat');
+  if (whatsappFloat) {
+    whatsappFloat.setAttribute('href', buildWhatsappHref(WHATSAPP_PHONE_E164, content.ui.whatsappMessage));
+    whatsappFloat.setAttribute('aria-label', content.ui.whatsappLabel);
+  }
 
   updateLocaleSwitcherActiveState(locale);
 }
