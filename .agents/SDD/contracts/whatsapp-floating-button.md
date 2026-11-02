@@ -97,3 +97,16 @@ precargado.
   real en vez de la silueta/iniciales anteriores, mobile proporcional,
   click real sigue abriendo wa.me con el mensaje correcto, visible en
   las 6 secciones sin regresiones.
+- **Tercera ronda** (ícono con aro WhatsApp + favicon redondeado): Juan
+  aportó una versión mejorada del ícono del botón (aro blanco clásico de
+  WhatsApp + cara, en vez del glifo de teléfono simple) y pidió que el
+  favicon se viera circular en vez de cuadrado. Se agregó un
+  `<clipPath>` SVG con `<circle>` al `<image>` embebido en
+  `favicon.svg`, y se regeneraron `favicon-16/32.png` + `favicon.ico`
+  con máscara elíptica (canal alpha transparente fuera del círculo,
+  confirmado vía PIL: esquinas alpha=0, centro alpha=254). Auditor
+  aislado: PASS (XML válido, sintaxis de `clip-path` correcta, PNGs
+  confirmados circulares, `.ico` válido, dimensiones del nuevo ícono
+  razonables). QA aislado: PASS — zoom 4x confirma el ícono limpio sin
+  artefactos, favicon se ve circular con las 4 esquinas transparentes,
+  rebote/hover/mobile/click real sin regresiones en 4 puntos de scroll.
