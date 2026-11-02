@@ -14,16 +14,16 @@ import type {
  */
 
 export const stationLayout: readonly StationSection[] = [
-  { key: 'about', color: 0x4cf3ff, position: { x: 0, y: 0, z: -11 } },
-  { key: 'experience', color: 0x4cf3ff, position: { x: -14, y: 0, z: -3 } },
-  { key: 'projects', color: 0xff4cd6, position: { x: 14, y: 0, z: -3 } },
-  { key: 'skills', color: 0x4cf3ff, position: { x: -14, y: 0, z: 10 } },
-  { key: 'contact', color: 0xff4cd6, position: { x: 14, y: 0, z: 10 } },
+  { key: 'about', color: 0xf4c95d, position: { x: 0, y: 0, z: -11 } },
+  { key: 'experience', color: 0xf4c95d, position: { x: -14, y: 0, z: -3 } },
+  { key: 'projects', color: 0xff5fa2, position: { x: 14, y: 0, z: -3 } },
+  { key: 'skills', color: 0xf4c95d, position: { x: -14, y: 0, z: 10 } },
+  { key: 'contact', color: 0xff5fa2, position: { x: 14, y: 0, z: 10 } },
 ];
 
 export const aboutContent: AboutContent = {
   key: 'about',
-  accentHex: '#4CF3FF',
+  accentHex: '#F4C95D',
   eyebrow: 'About',
   title: 'Profile',
   paragraphs: [
@@ -35,7 +35,7 @@ export const aboutContent: AboutContent = {
 
 export const experienceContent: ExperienceContent = {
   key: 'experience',
-  accentHex: '#4CF3FF',
+  accentHex: '#F4C95D',
   eyebrow: 'Career',
   title: 'Experience',
   jobs: [
@@ -76,7 +76,7 @@ export const experienceContent: ExperienceContent = {
 
 export const projectsContent: ProjectsContent = {
   key: 'projects',
-  accentHex: '#FF4CD6',
+  accentHex: '#FF5FA2',
   eyebrow: 'Selected Work',
   title: 'Projects',
   projects: [
@@ -173,7 +173,7 @@ export const projectsContent: ProjectsContent = {
 
 export const skillsContent: SkillsContent = {
   key: 'skills',
-  accentHex: '#4CF3FF',
+  accentHex: '#F4C95D',
   eyebrow: 'Toolbox',
   title: 'Skills & Stack',
   groups: [
@@ -198,7 +198,7 @@ export const skillsContent: SkillsContent = {
 
 export const contactContent: ContactContent = {
   key: 'contact',
-  accentHex: '#FF4CD6',
+  accentHex: '#FF5FA2',
   eyebrow: 'Get in touch',
   title: 'Contact',
   links: [
