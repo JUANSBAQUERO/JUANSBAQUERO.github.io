@@ -12,6 +12,7 @@ import {
   renderAboutParagraphs,
   renderContactRows,
   renderExperienceList,
+  renderLabEntries,
   renderProjectCards,
   renderSkillGroups,
 } from './application/services/StationContentRenderer';
@@ -26,7 +27,7 @@ import { ProjectModal } from './presentation/projects/ProjectModal';
 /** Beat ids that map 1:1 onto the old StationKey nav items -- everything
  *  the nav pill links to still exists as a beat, just inside the new
  *  journey scroll instead of a standalone <section>. */
-const NAV_BEAT_IDS: readonly StationKey[] = ['about', 'experience', 'projects', 'skills', 'contact'];
+const NAV_BEAT_IDS: readonly StationKey[] = ['about', 'experience', 'projects', 'lab', 'skills', 'contact'];
 
 /**
  * Composition root for the horizontal "journey" narrative: the character
@@ -44,6 +45,7 @@ function bootstrap(): void {
   const stageEl = document.getElementById('journey-stage');
   if (!stageEl) throw new Error('#journey-stage root element missing');
   const loaderEl = document.getElementById('stageLoader');
+  const speechBubbleEl = document.getElementById('stageSpeechBubble');
 
   const scene = new JourneyScene(stageEl, loaderEl);
   const smoothScroll = new SmoothScroll();
@@ -91,6 +93,77 @@ function bootstrap(): void {
     const project = getLocaleContent(currentLocale).projects.projects[index];
     if (project) projectModal.show(project);
   });
+
+  // Click easter egg: clicking the character shows a short speech-bubble
+  // reaction, picked at random from the current locale's lines but never
+  // repeating the same one twice in a row (a visitor clicking rapidly
+  // should see variety, not the same line stuck on screen).
+  let lastReactionIndex = -1;
+  let speechBubbleFadeTimer = 0;
+  let speechBubbleHideTimer = 0;
+  scene.onCharacterClick = () => {
+    dismissClickHint();
+    if (!speechBubbleEl) return;
+    const reactions = getLocaleContent(currentLocale).ui.characterReactions;
+    if (reactions.length === 0) return;
+    let index = Math.floor(Math.random() * reactions.length);
+    if (reactions.length > 1 && index === lastReactionIndex) {
+      index = (index + 1) % reactions.length;
+    }
+    lastReactionIndex = index;
+
+    speechBubbleEl.textContent = reactions[index];
+    speechBubbleEl.hidden = false;
+    speechBubbleEl.classList.remove('is-visible');
+    // Force a reflow so re-adding the class restarts the CSS transition
+    // even when a previous bubble's fade-out is still mid-flight.
+    void speechBubbleEl.offsetWidth;
+    speechBubbleEl.classList.add('is-visible');
+
+    // Both timers from any PREVIOUS click must be cancelled here, not just
+    // the outer one -- a rapid re-click used to leave the inner "set
+    // hidden=true" timeout alive from the earlier click, which then fired
+    // ~250ms later and hid the bubble this new click had just re-shown
+    // (a stale-timer race found in review). Tracking and clearing both
+    // timer ids closes that window.
+    window.clearTimeout(speechBubbleFadeTimer);
+    window.clearTimeout(speechBubbleHideTimer);
+    speechBubbleFadeTimer = window.setTimeout(() => {
+      speechBubbleEl.classList.remove('is-visible');
+      speechBubbleHideTimer = window.setTimeout(() => {
+        speechBubbleEl.hidden = true;
+      }, 250);
+    }, 2200);
+  };
+
+  // One-time "click him" teaser badge -- shown a few seconds after load
+  // so it doesn't compete with the hero text for attention, dismissed
+  // permanently (localStorage) the first time a visitor sees it, whether
+  // they click the character or just scroll past.
+  const CLICK_HINT_SEEN_KEY = 'portfolio-click-hint-seen';
+  const clickHintEl = document.getElementById('stageClickHint');
+  function dismissClickHint(): void {
+    if (!clickHintEl) return;
+    clickHintEl.classList.remove('is-visible');
+    try {
+      localStorage.setItem(CLICK_HINT_SEEN_KEY, '1');
+    } catch {
+      // private browsing / storage disabled -- hint just reappears next load
+    }
+  }
+  let clickHintSeen = false;
+  try {
+    clickHintSeen = localStorage.getItem(CLICK_HINT_SEEN_KEY) === '1';
+  } catch {
+    clickHintSeen = false;
+  }
+  if (clickHintEl && !clickHintSeen) {
+    window.setTimeout(() => {
+      clickHintEl.hidden = false;
+      requestAnimationFrame(() => clickHintEl.classList.add('is-visible'));
+    }, 3000);
+    window.addEventListener('scroll', dismissClickHint, { once: true, passive: true });
+  }
 
   nav.onNavigate = (key) => {
     const target = document.getElementById(`beat-${key}`);
@@ -182,6 +255,11 @@ function applyLocale(locale: Locale, nav: NavPillView, legalModal: LegalModal): 
   setText('projectsHeading', content.ui.projectsHeading);
   setHtml('projectsGrid', renderProjectCards(content.projects));
 
+  setText('labTag', content.ui.labTag);
+  setText('labHeading', content.ui.labHeading);
+  setText('labIntro', content.lab.intro);
+  setHtml('labList', renderLabEntries(content.lab));
+
   setText('skillsTag', content.ui.skillsTag);
   setText('skillsHeading', content.ui.skillsHeading);
   setHtml('skillsList', renderSkillGroups(content.skills));
@@ -191,6 +269,9 @@ function applyLocale(locale: Locale, nav: NavPillView, legalModal: LegalModal): 
 
   setText('legalLink', content.ui.footerLegalLink);
   legalModal.setContent(content.legal);
+
+  setText('stageLoaderCaption', content.ui.stageLoadingCaption);
+  setText('stageClickHint', content.ui.characterClickHint);
 
   updateLocaleSwitcherActiveState(locale);
 }

@@ -18,7 +18,12 @@
 <body>
 
 <div id="journey-stage">
-  <div class="stage-loader" id="stageLoader"><div class="stage-loader__ring"></div></div>
+  <div class="stage-loader" id="stageLoader">
+    <div class="stage-loader__ring"></div>
+    <div class="stage-loader__caption" id="stageLoaderCaption"></div>
+  </div>
+  <div class="stage-speech-bubble" id="stageSpeechBubble" hidden></div>
+  <div class="stage-click-hint" id="stageClickHint" hidden></div>
 </div>
 
 <nav id="navPill" class="nav-pill"></nav>
@@ -77,6 +82,15 @@
       <div class="tag-pill" id="skillsTag"></div>
       <h2 id="skillsHeading"></h2>
       <div class="skills-list" id="skillsList"></div>
+    </div>
+  </section>
+
+  <section class="beat" id="beat-lab" data-beat="lab">
+    <div class="beat-card beat-card--wide">
+      <div class="tag-pill" id="labTag"></div>
+      <h2 id="labHeading"></h2>
+      <p id="labIntro" class="lab-intro"></p>
+      <div class="lab-list" id="labList"></div>
     </div>
   </section>
 

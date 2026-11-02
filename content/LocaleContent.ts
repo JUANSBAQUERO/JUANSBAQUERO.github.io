@@ -2,6 +2,7 @@ import type {
   AboutContent,
   ContactContent,
   ExperienceContent,
+  LabContent,
   ProjectsContent,
   SkillsContent,
 } from '../src/domain/entities/Station';
@@ -14,6 +15,7 @@ export interface UiStrings {
     readonly about: string;
     readonly experience: string;
     readonly projects: string;
+    readonly lab: string;
     readonly skills: string;
     readonly contact: string;
   };
@@ -32,11 +34,24 @@ export interface UiStrings {
   readonly experienceHeading: string;
   readonly projectsTag: string;
   readonly projectsHeading: string;
+  readonly labTag: string;
+  readonly labHeading: string;
   readonly skillsTag: string;
   readonly skillsHeading: string;
   readonly contactHeading: string;
   readonly aboutRole: string;
   readonly footerLegalLink: string;
+  /** Loading-spinner caption shown while the 3D character GLB fetches --
+   *  a brand voice touch instead of a generic "Loading...". */
+  readonly stageLoadingCaption: string;
+  /** Click-hint tooltip shown near the character stage the first time a
+   *  visitor hovers it, teasing the click easter egg (see JourneyScene's
+   *  click handler + CHARACTER_REACTIONS in content/journey.ts). */
+  readonly characterClickHint: string;
+  /** Short one-liners the character "says" (speech bubble) when clicked --
+   *  one picked at random per click, never twice in a row. Brand-voice
+   *  easter egg, not functional copy -- keep these short and punchy. */
+  readonly characterReactions: readonly string[];
 }
 
 /** Content for the Privacy & Legal Notice popup (see LegalModal.ts). Plain
@@ -59,6 +74,7 @@ export interface LocaleContent {
   readonly about: AboutContent;
   readonly experience: ExperienceContent;
   readonly projects: ProjectsContent;
+  readonly lab: LabContent;
   readonly skills: SkillsContent;
   readonly contact: ContactContent;
   readonly legal: LegalContent;

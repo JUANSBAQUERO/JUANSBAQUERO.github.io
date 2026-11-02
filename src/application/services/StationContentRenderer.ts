@@ -2,6 +2,7 @@ import type {
   AboutContent,
   ContactContent,
   ExperienceContent,
+  LabContent,
   ProjectsContent,
   SkillsContent,
 } from '../../domain/entities/Station';
@@ -87,4 +88,17 @@ export function renderContactRows(content: ContactContent): string {
     })
     .join('');
   return `${rows}<p class="contact-note">${content.note}</p>`;
+}
+
+export function renderLabEntries(content: LabContent): string {
+  return content.entries
+    .map(
+      (entry) => `
+      <div class="lab-entry">
+        <div class="lab-entry__date">${entry.date}</div>
+        <h4>${entry.title}</h4>
+        <p>${entry.summary}</p>
+      </div>`,
+    )
+    .join('');
 }

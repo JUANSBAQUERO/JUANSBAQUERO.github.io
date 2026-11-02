@@ -33,6 +33,7 @@ export const journeyBeats: readonly JourneyBeat[] = [
   { id: 'experience', scene: 'run', contentId: 'experience' },
   { id: 'projects', scene: 'crash', contentId: 'projects' },
   { id: 'skills', scene: 'standup', contentId: 'skills' },
+  { id: 'lab', scene: 'standup', contentId: 'lab' },
   { id: 'contact', scene: 'bow', contentId: 'contact' },
 ];
 

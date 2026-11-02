@@ -1,9 +1,9 @@
 import type { StationKey } from '../../domain/entities/Station';
 
-const SECTION_ORDER: readonly StationKey[] = ['about', 'experience', 'projects', 'skills', 'contact'];
+const SECTION_ORDER: readonly StationKey[] = ['about', 'experience', 'projects', 'skills', 'lab', 'contact'];
 
 /**
- * Floating pill navbar (About / Experience / Projects / Skills / Contact).
+ * Floating pill navbar (About / Experience / Projects / Skills / Lab / Contact).
  * Pure DOM: highlights the active item and smooth-scrolls to a section on
  * click — never touches Three.js or scroll-spy math directly (the caller
  * wires `onNavigate` to whatever scrolling mechanism it wants).
