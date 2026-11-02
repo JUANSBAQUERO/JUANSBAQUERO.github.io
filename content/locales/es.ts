@@ -277,7 +277,7 @@ export const es: LocaleContent = {
 
   legal: {
     title: 'Aviso de Privacidad y Legal',
-    lastUpdated: 'Última actualización: octubre de 2026',
+    lastUpdated: 'Última actualización: noviembre de 2026',
     closeLabel: 'Cerrar',
     sections: [
       {
@@ -289,14 +289,15 @@ export const es: LocaleContent = {
       {
         heading: 'Información que recopila este sitio',
         paragraphs: [
-          'Este sitio no utiliza analítica, píxeles de rastreo ni cookies publicitarias, y no recopila datos personales a través de ningún formulario. El único almacenamiento del navegador utilizado es una preferencia local (el idioma de visualización elegido), guardada en el localStorage de tu navegador para que persista entre visitas — nunca se transmite a ningún lado y puedes borrarla en cualquier momento desde la configuración de tu navegador.',
+          'Este sitio usa PostHog, un servicio de analítica respetuoso con la privacidad, para entender patrones básicos de visita — si las personas ingresan y hasta qué sección de contenido llegan (Sobre mí, Experiencia, Proyectos, Habilidades, Laboratorio, Contacto). PostHog no utiliza cookies publicitarias y este sitio no corre píxeles de rastreo publicitario ni vende datos a terceros. La analítica se omite por completo cuando el sitio se ve en localhost durante desarrollo.',
+          'Por separado, el único almacenamiento del navegador utilizado directamente por el código de este sitio es una preferencia local (el idioma de visualización elegido), guardada en el localStorage de tu navegador para que persista entre visitas — nunca se transmite a ningún lado y puedes borrarla en cualquier momento desde la configuración de tu navegador.',
           'Si decides escribir al correo indicado en la sección de Contacto, cualquier información que incluyas en ese mensaje se maneja igual que cualquier otro correo personal — no es recopilada ni almacenada por este sitio web.',
         ],
       },
       {
         heading: 'Hosting y recursos de terceros',
         paragraphs: [
-          'Este sitio está alojado como sitio estático en GitHub Pages (GitHub, Inc.) y carga fuentes web desde Google Fonts. Estos proveedores externos pueden procesar datos técnicos estándar de solicitud (como dirección IP y user-agent del navegador) como parte de la operación normal de hosting/CDN, bajo sus propias políticas de privacidad.',
+          'Este sitio está alojado como sitio estático en GitHub Pages (GitHub, Inc.), carga fuentes web desde Google Fonts, y usa PostHog (PostHog Inc.) para analítica básica de visitas como se describe arriba. Estos proveedores externos pueden procesar datos técnicos estándar de solicitud (como dirección IP y user-agent del navegador) como parte de la operación normal de hosting/CDN/analítica, bajo sus propias políticas de privacidad.',
         ],
       },
       {
