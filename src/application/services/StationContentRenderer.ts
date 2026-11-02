@@ -27,8 +27,8 @@ export function renderAboutIdentity(name: string, role: string): string {
 export function renderExperienceList(content: ExperienceContent): string {
   return content.jobs
     .map(
-      (job) => `
-      <div class="job">
+      (job, i) => `
+      <div class="job" style="--stagger-index:${i}">
         <h3>${job.role} — ${job.org}</h3>
         <div class="meta">${job.period}</div>
         <p>${job.summary}</p>
@@ -56,7 +56,7 @@ export function renderProjectCards(content: ProjectsContent): string {
         .join('')
         .toUpperCase();
       return `
-      <button type="button" class="proj-card" data-project-index="${i}">
+      <button type="button" class="proj-card" data-project-index="${i}" style="--stagger-index:${i}">
         <div class="proj-tile" style="--tile-color:${tileColor}"><span>${initials}</span></div>
         <div class="org">${p.org}</div>
         <h4>${p.title}</h4>
@@ -70,8 +70,8 @@ export function renderProjectCards(content: ProjectsContent): string {
 export function renderSkillGroups(content: SkillsContent): string {
   return content.groups
     .map(
-      (g) => `
-      <div class="skill-group"><h4>${g.title}</h4><div class="tags">${g.skills
+      (g, i) => `
+      <div class="skill-group" style="--stagger-index:${i}"><h4>${g.title}</h4><div class="tags">${g.skills
         .map((s) => `<span class="tag">${s}</span>`)
         .join('')}</div></div>`,
     )
@@ -93,8 +93,8 @@ export function renderContactRows(content: ContactContent): string {
 export function renderLabEntries(content: LabContent): string {
   return content.entries
     .map(
-      (entry) => `
-      <div class="lab-entry">
+      (entry, i) => `
+      <div class="lab-entry" style="--stagger-index:${i}">
         <div class="lab-entry__date">${entry.date}</div>
         <h4>${entry.title}</h4>
         <p>${entry.summary}</p>

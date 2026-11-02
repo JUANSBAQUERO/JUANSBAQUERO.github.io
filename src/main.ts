@@ -1,6 +1,7 @@
 import { JourneyScene } from './infrastructure/three/JourneyScene';
 import { SmoothScroll } from './infrastructure/scroll/SmoothScroll';
 import { NavPillView } from './presentation/nav/NavPillView';
+import { RevealController } from './presentation/scroll/RevealController';
 import {
   computeActiveBeatId,
   computeCharacterPosition,
@@ -222,6 +223,17 @@ function bootstrap(): void {
   scene.start();
   smoothScroll.start();
   updateJourney();
+
+  // Beat-card entrance/exit animations (not a totally static page, see
+  // RevealController) -- respects prefers-reduced-motion by skipping the
+  // observer entirely and marking every card revealed immediately instead
+  // of leaving them permanently hidden for users who opted out of motion.
+  const beatCards = document.querySelectorAll('.beat-card');
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    RevealController.revealAllImmediately(beatCards);
+  } else {
+    new RevealController(beatCards).start();
+  }
 }
 
 /** Re-renders every localized text node (nav, hero, section headings,
