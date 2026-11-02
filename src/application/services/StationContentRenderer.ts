@@ -38,7 +38,7 @@ export function renderExperienceList(content: ExperienceContent): string {
     .join('');
 }
 
-const PROJECT_TILE_COLORS = ['#FF4CD6', '#4CF3FF', '#FFC24C', '#7CFF4C', '#9B6CFF', '#FF6C4C'];
+const PROJECT_TILE_COLORS = ['#FF5FA2', '#F4C95D', '#FF8A3D'];
 
 /** Each card is a real <button>, not a static <div> -- clicking it opens
  *  the project detail modal (wired in main.ts via data-project-index), so

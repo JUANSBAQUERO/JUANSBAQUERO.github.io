@@ -17,7 +17,7 @@ export interface Vec3Tuple {
 
 export interface StationSection {
   readonly key: StationKey;
-  /** Hex color used for neon accents tied to this station (e.g. 0x4cf3ff). */
+  /** Hex color used for neon accents tied to this station (e.g. 0xf4c95d). */
   readonly color: number;
   readonly position: Vec3Tuple;
 }

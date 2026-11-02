@@ -2,9 +2,9 @@
   --cream: #f4ede2;
   --ink: #221f1a;
   --ink-soft: #6b6456;
-  --accent-cyan: #4cf3ff;
-  --accent-magenta: #ff4cd6;
-  --accent-orange: #ff8a3d;
+  --accent-primary: #ff8a3d;
+  --accent-secondary: #ff5fa2;
+  --accent-tertiary: #f4c95d;
   --card: #ffffff;
   --line: rgba(34, 31, 26, 0.12);
 }
@@ -100,8 +100,8 @@ h4 {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 3px solid rgba(76, 243, 255, 0.25);
-  border-top-color: var(--accent-cyan);
+  border: 3px solid rgba(244, 201, 93, 0.25);
+  border-top-color: var(--accent-tertiary);
   animation: stage-spin 0.9s linear infinite;
 }
 .stage-loader__caption {
@@ -167,8 +167,8 @@ h4 {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
   color: #eaf6ff;
-  background: rgba(76, 243, 255, 0.16);
-  border: 1px solid rgba(76, 243, 255, 0.4);
+  background: rgba(244, 201, 93, 0.16);
+  border: 1px solid rgba(244, 201, 93, 0.4);
   padding: 6px 12px;
   border-radius: 20px;
   opacity: 0;
@@ -250,7 +250,7 @@ h4 {
     align-items: stretch;
     border-radius: 16px;
     background: rgba(11, 20, 32, 0.96);
-    border-color: rgba(76, 243, 255, 0.25);
+    border-color: rgba(244, 201, 93, 0.25);
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
     display: none;
   }
@@ -266,8 +266,8 @@ h4 {
     color: #fff;
   }
   .nav-pill__item.is-active {
-    background: rgba(76, 243, 255, 0.14);
-    color: var(--accent-cyan);
+    background: rgba(244, 201, 93, 0.14);
+    color: var(--accent-tertiary);
   }
 }
 @media (min-width: 681px) {
@@ -286,7 +286,7 @@ h4 {
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  border: 1px solid rgba(76, 243, 255, 0.25);
+  border: 1px solid rgba(244, 201, 93, 0.25);
   background: rgba(11, 20, 32, 0.88);
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
@@ -372,7 +372,7 @@ h4 {
   font-size: 0.82rem;
   letter-spacing: 0.02em;
   color: #1a0f05;
-  background: var(--accent-orange);
+  background: var(--accent-primary);
   padding: 13px 22px;
   border: none;
   border-radius: 40px;
@@ -448,7 +448,7 @@ main {
   max-width: 560px;
   max-height: 560px;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--beat-accent, var(--accent-cyan)) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--beat-accent, var(--accent-tertiary)) 0%, transparent 70%);
   opacity: 0.16;
   filter: blur(70px);
   transform: translateY(-50%);
@@ -473,7 +473,7 @@ main {
   width: 100%;
   max-width: 640px;
   background: rgba(8, 14, 24, 0.86);
-  border: 1px solid rgba(76, 243, 255, 0.3);
+  border: 1px solid rgba(244, 201, 93, 0.3);
   border-radius: 18px;
   padding: 32px 40px;
   backdrop-filter: blur(16px);
@@ -534,7 +534,7 @@ main {
 
 .beat-card .eyebrow {
   font-family: 'JetBrains Mono', monospace;
-  color: var(--accent-orange);
+  color: var(--accent-primary);
   letter-spacing: 0.12em;
   font-size: 0.78rem;
   text-transform: uppercase;
@@ -550,7 +550,7 @@ main {
   color: #fff;
 }
 .beat-card h1 span {
-  color: var(--accent-magenta);
+  color: var(--accent-secondary);
 }
 .hero-availability {
   display: inline-flex;
@@ -572,7 +572,7 @@ main {
   font-size: clamp(0.95rem, 2vw, 1.15rem);
   font-weight: 700;
   color: #fff;
-  background: var(--accent-orange);
+  background: var(--accent-primary);
   padding: 8px 20px;
   border-radius: 10px;
   transform: rotate(-2deg);
@@ -623,7 +623,7 @@ main {
   font-size: 0.68rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  background: var(--accent-orange);
+  background: var(--accent-primary);
   color: #1a0f05;
   padding: 5px 14px;
   border-radius: 20px;
@@ -654,7 +654,7 @@ main {
   gap: 4px;
 }
 .job {
-  border-left: 2px solid rgba(76, 243, 255, 0.35);
+  border-left: 2px solid rgba(244, 201, 93, 0.35);
   padding: 4px 0 24px 22px;
   position: relative;
   /* Staggered reveal: each item fades/slides in with an increasing delay
@@ -678,8 +678,8 @@ main {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--accent-cyan);
-  box-shadow: 0 0 10px var(--accent-cyan);
+  background: var(--accent-tertiary);
+  box-shadow: 0 0 10px var(--accent-tertiary);
 }
 .job h3 {
   margin: 0 0 4px;
@@ -706,9 +706,9 @@ main {
 .tag {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.68rem;
-  background: rgba(76, 243, 255, 0.12);
-  border: 1px solid rgba(76, 243, 255, 0.3);
-  color: var(--accent-cyan);
+  background: rgba(244, 201, 93, 0.12);
+  border: 1px solid rgba(244, 201, 93, 0.3);
+  color: var(--accent-tertiary);
   padding: 4px 10px;
   border-radius: 20px;
 }
@@ -759,7 +759,7 @@ main {
   transition-delay: 0s;
 }
 .proj-card:focus-visible {
-  outline: 2px solid var(--accent-cyan);
+  outline: 2px solid var(--accent-tertiary);
   outline-offset: 2px;
 }
 .proj-card__hint {
@@ -767,10 +767,10 @@ main {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
   letter-spacing: 0.03em;
-  color: var(--accent-cyan);
+  color: var(--accent-tertiary);
 }
 .proj-tile {
-  --tile-color: #4cf3ff;
+  --tile-color: #f4c95d;
   height: 110px;
   display: flex;
   align-items: center;
@@ -787,7 +787,7 @@ main {
 .proj-card .org {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.64rem;
-  color: var(--accent-magenta);
+  color: var(--accent-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin: 14px 16px 0;
@@ -819,15 +819,15 @@ main {
 .skill-group h4 {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
-  color: #8fe0a8;
+  color: var(--accent-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin: 0 0 10px;
 }
 .skills-list .tag {
-  background: rgba(140, 255, 170, 0.12);
-  border-color: rgba(140, 255, 170, 0.3);
-  color: #8fe0a8;
+  background: rgba(244, 201, 93, 0.12);
+  border-color: rgba(244, 201, 93, 0.3);
+  color: var(--accent-tertiary);
 }
 
 /* ---------- lab (changelog-style "what I'm poking at lately") ---------- */
@@ -859,7 +859,7 @@ main {
   font-size: 0.68rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--accent-orange);
+  color: var(--accent-primary);
   margin-bottom: 4px;
 }
 .lab-entry h4 {
@@ -900,7 +900,7 @@ main {
   hyphens: auto;
 }
 .contact-row a:hover {
-  color: var(--accent-magenta);
+  color: var(--accent-secondary);
 }
 .contact-row span {
   color: #cfe3f0;
@@ -910,7 +910,7 @@ main {
 .contact-list .ico {
   width: 22px;
   text-align: center;
-  color: var(--accent-orange);
+  color: var(--accent-primary);
   font-weight: 700;
 }
 .contact-note {
@@ -966,7 +966,7 @@ main {
 }
 .legal-modal {
   background: #0f1826;
-  border: 1px solid rgba(76, 243, 255, 0.25);
+  border: 1px solid rgba(244, 201, 93, 0.25);
   border-radius: 18px;
   max-width: 640px;
   width: 100%;
@@ -1013,7 +1013,7 @@ main {
 }
 .legal-modal__body h3 {
   font-size: 1rem;
-  color: var(--accent-cyan);
+  color: var(--accent-tertiary);
   margin: 22px 0 8px;
 }
 .legal-modal__body h3:first-child {
@@ -1041,7 +1041,7 @@ main {
 .proj-modal__org {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
-  color: var(--accent-magenta);
+  color: var(--accent-secondary);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin: 0 28px 6px 0;
@@ -1066,7 +1066,7 @@ main {
   font-weight: 700;
   font-size: 0.88rem;
   color: #1a0f05;
-  background: var(--accent-orange);
+  background: var(--accent-primary);
   padding: 12px 20px;
   border-radius: 40px;
   text-decoration: none;

@@ -48,7 +48,7 @@ export const en: LocaleContent = {
 
   about: {
     key: 'about',
-    accentHex: '#4CF3FF',
+    accentHex: '#F4C95D',
     eyebrow: 'About',
     title: 'Profile',
     paragraphs: [
@@ -60,7 +60,7 @@ export const en: LocaleContent = {
 
   experience: {
     key: 'experience',
-    accentHex: '#4CF3FF',
+    accentHex: '#F4C95D',
     eyebrow: 'Career',
     title: 'Experience',
     jobs: [
@@ -101,7 +101,7 @@ export const en: LocaleContent = {
 
   projects: {
     key: 'projects',
-    accentHex: '#FF4CD6',
+    accentHex: '#FF5FA2',
     eyebrow: 'Selected Work',
     title: 'Projects',
     projects: [
@@ -198,7 +198,7 @@ export const en: LocaleContent = {
 
   skills: {
     key: 'skills',
-    accentHex: '#4CF3FF',
+    accentHex: '#F4C95D',
     eyebrow: 'Toolbox',
     title: 'Skills & Stack',
     groups: [
@@ -223,7 +223,7 @@ export const en: LocaleContent = {
 
   lab: {
     key: 'lab',
-    accentHex: '#4CF3FF',
+    accentHex: '#FF8A3D',
     eyebrow: 'Right now',
     title: "What I'm poking at lately",
     intro:
@@ -252,7 +252,7 @@ export const en: LocaleContent = {
 
   contact: {
     key: 'contact',
-    accentHex: '#FF4CD6',
+    accentHex: '#FF5FA2',
     eyebrow: 'Get in touch',
     title: 'Contact',
     links: [

@@ -1,5 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <rect width="64" height="64" rx="14" fill="#0b1420"/>
-  <text x="32" y="43" font-family="Arial, Helvetica, sans-serif" font-weight="700"
-        font-size="28" fill="#ff8a3d" text-anchor="middle">JB</text>
+  <!-- Simplified silhouette of the 3D character's head: a round face plus
+       three spiky tufts of tousled hair, built from plain circles/triangles
+       so it stays legible at 16px favicon scale, unlike a hand-drawn path. -->
+  <circle cx="32" cy="36" r="15" fill="#f4e4d4"/>
+  <circle cx="32" cy="22" r="13" fill="#1a1510"/>
+  <path d="M15 24 L21 10 L25 22 Z" fill="#1a1510"/>
+  <path d="M49 24 L43 10 L39 22 Z" fill="#1a1510"/>
+  <path d="M32 6 L37 18 L27 18 Z" fill="#1a1510"/>
+  <circle cx="32" cy="56" r="4" fill="#ff5fa2"/>
 </svg>
