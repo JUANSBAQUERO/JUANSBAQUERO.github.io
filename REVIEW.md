@@ -5,20 +5,21 @@ agrega al abrir el PR y se elimina al mergearlo (el histórico completo
 queda en `.agents/SDD/contracts/` y en `git log`). Ver
 `.agents/rules/documentation-policy.md` para el formato.
 
-## PR — refactor: split main.css into per-concern files
+## PR — feat: PostHog analytics (visits + section depth)
 
-**refactor:** `main.css` (1143 líneas) dividido en 13 archivos por
-responsabilidad (tokens, stage 3D, nav, shell genérico de beats, una
-sección por archivo, footer, modales), siguiendo el mismo patrón de
-separación que ya usa `content/` por sección. `main.css` queda como
-índice de `@import`. Cero cambio de contenido de ninguna regla.
+**feat:** analítica con PostHog para medir si la gente ingresa al sitio
+y hasta qué sección llega (About/Experience/Projects/Skills/Lab/
+Contact). Wrapper aislado en `src/infrastructure/analytics/Analytics.ts`
+(mismo patrón que `SmoothScroll.ts`), con guard de localhost y dedupe de
+eventos. Aviso legal actualizado honestamente (ya no dice "no
+analytics").
 
-**bug:** N/A — refactor de pura reorganización, sin cambio visual.
+**bug:** N/A — feature nueva.
 
-**cómo verificar:** confirmar que el sitio se ve exactamente igual en
-todas las secciones (About/Experience/Projects/Skills/Lab/Contact),
-mobile, y el modal legal; el CSS compilado (`dist/assets/*.css`) debe
-pesar lo mismo que antes.
+**cómo verificar:** en producción, confirmar en el dashboard de PostHog
+que llegan pageviews y el evento `section_viewed` por sección; en dev
+(`pnpm run dev`), confirmar que NO hay ninguna request de red a
+PostHog; revisar el aviso legal actualizado en EN/ES.
 
-PR: https://github.com/JUANSBAQUERO/JUANSBAQUERO.github.io/pull/7 ·
-Contrato: `.agents/SDD/contracts/split-css-architecture.md`
+PR: https://github.com/JUANSBAQUERO/JUANSBAQUERO.github.io/pull/8 ·
+Contrato: `.agents/SDD/contracts/posthog-analytics.md`

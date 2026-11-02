@@ -275,7 +275,7 @@ export const en: LocaleContent = {
 
   legal: {
     title: 'Privacy & Legal Notice',
-    lastUpdated: 'Last updated: October 2026',
+    lastUpdated: 'Last updated: November 2026',
     closeLabel: 'Close',
     sections: [
       {
@@ -287,14 +287,15 @@ export const en: LocaleContent = {
       {
         heading: 'Information this site collects',
         paragraphs: [
-          "This site does not use analytics, tracking pixels, or advertising cookies, and does not collect personal data through any form. The only browser storage used is a single local preference (your chosen display language), saved in your browser's localStorage so it persists between visits -- it is never transmitted anywhere and you can clear it at any time via your browser settings.",
+          "This site uses PostHog, a privacy-conscious analytics service, to understand basic visit patterns -- whether visitors arrive at all and how far they scroll through the content sections (About, Experience, Projects, Skills, Lab, Contact). PostHog does not use advertising cookies and this site does not run any ad-tracking pixels or sell data to third parties. Analytics is skipped entirely when the site is viewed on localhost during development.",
+          "Separately, the only browser storage used directly by this site's own code is a single local preference (your chosen display language), saved in your browser's localStorage so it persists between visits -- it is never transmitted anywhere and you can clear it at any time via your browser settings.",
           'If you choose to email the address listed in the Contact section, any information you include in that message is handled the same as any other personal email -- it is not collected or stored by this website itself.',
         ],
       },
       {
         heading: 'Hosting and third-party resources',
         paragraphs: [
-          'This site is hosted as a static site on GitHub Pages (GitHub, Inc.) and loads web fonts from Google Fonts. These third-party providers may process standard technical request data (such as IP address and browser user-agent) as part of normal web hosting/CDN operation, under their own respective privacy policies.',
+          'This site is hosted as a static site on GitHub Pages (GitHub, Inc.), loads web fonts from Google Fonts, and uses PostHog (PostHog Inc.) for basic visit analytics as described above. These third-party providers may process standard technical request data (such as IP address and browser user-agent) as part of normal web hosting/CDN/analytics operation, under their own respective privacy policies.',
         ],
       },
       {

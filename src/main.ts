@@ -27,6 +27,7 @@ import { WHATSAPP_PHONE_E164 } from '../content/portfolio';
 import { getLocaleContent } from '../content/locales/index';
 import { LegalModal } from './presentation/legal/LegalModal';
 import { ProjectModal } from './presentation/projects/ProjectModal';
+import { Analytics } from './infrastructure/analytics/Analytics';
 
 /** Beat ids that map 1:1 onto the old StationKey nav items -- everything
  *  the nav pill links to still exists as a beat, just inside the new
@@ -53,6 +54,8 @@ function bootstrap(): void {
 
   const scene = new JourneyScene(stageEl, loaderEl);
   const smoothScroll = new SmoothScroll();
+  const analytics = new Analytics();
+  analytics.init();
 
   const localePreference = new LocalePreference();
   const initialLocale = resolveInitialLocale(
@@ -211,6 +214,7 @@ function bootstrap(): void {
       activeBeatId = nextBeatId;
       const navKey = NAV_BEAT_IDS.find((k) => k === activeBeatId) ?? null;
       nav.setActive(navKey);
+      if (activeBeatId) analytics.trackSectionViewed(activeBeatId);
     }
 
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
