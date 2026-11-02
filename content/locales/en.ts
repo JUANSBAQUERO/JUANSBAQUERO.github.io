@@ -8,6 +8,7 @@ export const en: LocaleContent = {
       about: 'About',
       experience: 'Experience',
       projects: 'Projects',
+      lab: 'Lab',
       skills: 'Skills',
       contact: 'Contact',
     },
@@ -17,9 +18,9 @@ export const en: LocaleContent = {
       availability: '🟢 Open to full-time roles & freelance projects',
       greetingPrefix: "Hi, I'm ",
       name: 'Juan',
-      subtitle: 'I build full-stack software.',
-      body: 'Scroll down to meet me — 7+ years shipping web & mobile products, from fintech wallets to AI-driven SaaS.',
-      scrollHint: '↓ scroll',
+      subtitle: 'I build things before I know I wanted to build them.',
+      body: "7+ years shipping web & mobile products — fintech wallets, AI-driven SaaS, and whatever new thing catches my attention next. Scroll, there's a character for that.",
+      scrollHint: '↓ scroll (he will walk)',
     },
     aboutTag: 'About',
     aboutRole: 'Senior Full Stack Developer',
@@ -27,10 +28,22 @@ export const en: LocaleContent = {
     experienceHeading: 'Experience',
     projectsTag: 'Selected',
     projectsHeading: 'Projects',
+    labTag: 'Right now',
+    labHeading: "What I'm poking at lately",
     skillsTag: 'Toolbox',
     skillsHeading: 'Skills & Stack',
     contactHeading: "Let's build something together.",
     footerLegalLink: 'Privacy & Legal Notice',
+    stageLoadingCaption: 'Lacing up his shoes…',
+    characterClickHint: 'psst — click him',
+    characterReactions: [
+      'Hey! I was mid-sprint, literally.',
+      'You rang? I was about to refactor my own legs.',
+      'Careful, I bill by the click.',
+      'Still faster than my last code review.',
+      'New experience unlocked: being poked.',
+      "I'd shake your hand but I'm 2D-rigged for that.",
+    ],
   },
 
   about: {
@@ -204,6 +217,35 @@ export const en: LocaleContent = {
       {
         title: 'Data & Cloud',
         skills: ['PostgreSQL', 'MySQL', 'MongoDB', 'SQL Server', 'AWS', 'Docker', 'DigitalOcean'],
+      },
+    ],
+  },
+
+  lab: {
+    key: 'lab',
+    accentHex: '#4CF3FF',
+    eyebrow: 'Right now',
+    title: "What I'm poking at lately",
+    intro:
+      "I get bored fast with doing the same thing twice, so this is the stuff I'm actually messing with this month — not a highlight reel, just the current obsession.",
+    entries: [
+      {
+        date: 'Nov 2026',
+        title: 'Running a multi-agent dev pipeline on this exact site',
+        summary:
+          "Set up a Builder → Auditor → QA pipeline (isolated AI roles reviewing each other, no self-grading allowed) for this portfolio's own repo, with a PR-only git workflow and recorded branch protection. Same discipline I'd want on a team of one.",
+      },
+      {
+        date: 'Oct 2026',
+        title: 'Rebuilt this portfolio as a scroll-driven 3D journey',
+        summary:
+          'Swapped a static layout for a character that walks/runs/crashes/bows across the screen as you scroll, synced to animation clips and a scene-progress state machine — then tore the stage band down to size after my brother told me the character was eating all the screen real estate.',
+      },
+      {
+        date: '2026',
+        title: 'FinanceOS — building a finance SaaS to actually understand Clean Architecture',
+        summary:
+          "Personal finance tracker, built solo to force myself past 'I know the theory' into 'I can defend every layer boundary.' Wrote up the whole build process as a downloadable playbook in the Projects section above.",
       },
     ],
   },

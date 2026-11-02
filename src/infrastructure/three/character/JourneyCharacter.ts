@@ -21,6 +21,15 @@ export class JourneyCharacter {
   private currentAction: THREE.AnimationAction | null = null;
   private loadPromise: Promise<void> | null = null;
   private targetFacingY = Math.PI / 2;
+  // Click-reaction squash/stretch -- deliberately kept SEPARATE from the
+  // scroll-driven clip state machine (playClip/currentAction above) rather
+  // than trying to trigger a one-shot clip: layering a second animation
+  // system on top of whatever walk/run/crash clip is already playing would
+  // require pausing/resuming the mixer action, which risks desyncing the
+  // scroll-driven pose. A pure scale tween on the group is orthogonal to
+  // the skeletal animation, so it can't fight it.
+  private bounceElapsed = -1; // -1 = idle, not bouncing
+  private static readonly BOUNCE_DURATION = 0.45;
   onLoadingChange: ((loading: boolean) => void) | null = null;
 
   async load(): Promise<void> {
@@ -110,11 +119,35 @@ export class JourneyCharacter {
     this.targetFacingY = angleY;
   }
 
+  /** Triggers the click-reaction squash/stretch bounce -- a brand-voice
+   *  easter egg (see JourneyScene's click handler), independent of
+   *  whatever scroll-driven clip is currently playing. Re-triggerable
+   *  mid-bounce (resets elapsed) so rapid clicking doesn't look broken. */
+  triggerClickBounce(): void {
+    this.bounceElapsed = 0;
+  }
+
   update(delta: number): void {
     this.mixer?.update(delta);
     if (this.model) {
       const diff = this.shortestAngleDiff(this.model.rotation.y, this.targetFacingY);
       this.model.rotation.y += diff * Math.min(1, delta * 3);
+    }
+
+    if (this.bounceElapsed >= 0) {
+      this.bounceElapsed += delta;
+      const t = this.bounceElapsed / JourneyCharacter.BOUNCE_DURATION;
+      if (t >= 1) {
+        this.group.scale.set(1, 1, 1);
+        this.bounceElapsed = -1;
+      } else {
+        // A single damped squash-then-overshoot cycle: dips short/wide at
+        // the start (impact of the click), then overshoots tall/thin past
+        // 1.0 before settling -- reads as a cartoony "boing", not a linear
+        // scale change.
+        const squash = Math.sin(t * Math.PI) * (1 - t);
+        this.group.scale.set(1 + squash * 0.18, 1 - squash * 0.26, 1 + squash * 0.18);
+      }
     }
   }
 

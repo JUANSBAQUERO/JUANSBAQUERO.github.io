@@ -7,6 +7,7 @@ export const es: LocaleContent = {
       about: 'Sobre mí',
       experience: 'Experiencia',
       projects: 'Proyectos',
+      lab: 'Laboratorio',
       skills: 'Habilidades',
       contact: 'Contacto',
     },
@@ -16,9 +17,9 @@ export const es: LocaleContent = {
       availability: '🟢 Abierto a empleo full-time y proyectos freelance',
       greetingPrefix: 'Hola, soy ',
       name: 'Juan',
-      subtitle: 'Construyo software full-stack.',
-      body: 'Desplázate para conocerme — más de 7 años desarrollando productos web y móviles, desde billeteras fintech hasta SaaS con IA.',
-      scrollHint: '↓ desplázate',
+      subtitle: 'Construyo cosas antes de saber que las quería construir.',
+      body: 'Más de 7 años desarrollando productos web y móviles — billeteras fintech, SaaS con IA, y lo que sea que me llame la atención después. Desplázate, hay un personaje para eso.',
+      scrollHint: '↓ desplázate (él va a caminar)',
     },
     aboutTag: 'Sobre mí',
     aboutRole: 'Desarrollador Full Stack Senior',
@@ -26,10 +27,22 @@ export const es: LocaleContent = {
     experienceHeading: 'Experiencia',
     projectsTag: 'Destacados',
     projectsHeading: 'Proyectos',
+    labTag: 'Ahora mismo',
+    labHeading: 'En qué ando metido últimamente',
     skillsTag: 'Herramientas',
     skillsHeading: 'Habilidades y Stack',
     contactHeading: 'Construyamos algo juntos.',
     footerLegalLink: 'Aviso de Privacidad y Legal',
+    stageLoadingCaption: 'Amarrándose los zapatos…',
+    characterClickHint: 'psst — dale click',
+    characterReactions: [
+      'Oye, estaba a mitad de un sprint, literal.',
+      '¿Me llamaste? Iba a refactorizar mis propias piernas.',
+      'Cuidado, cobro por click.',
+      'Sigo siendo más rápido que mi último code review.',
+      'Nueva experiencia desbloqueada: que me pinchen.',
+      'Te daría la mano pero no tengo rig para eso.',
+    ],
   },
 
   about: {
@@ -206,6 +219,35 @@ export const es: LocaleContent = {
       {
         title: 'Datos y Nube',
         skills: ['PostgreSQL', 'MySQL', 'MongoDB', 'SQL Server', 'AWS', 'Docker', 'DigitalOcean'],
+      },
+    ],
+  },
+
+  lab: {
+    key: 'lab',
+    accentHex: '#4CF3FF',
+    eyebrow: 'Ahora mismo',
+    title: 'En qué ando metido últimamente',
+    intro:
+      'Me aburro rápido de hacer lo mismo dos veces, así que esto es en lo que estoy metido este mes de verdad — no un highlight reel, solo la obsesión actual.',
+    entries: [
+      {
+        date: 'Nov 2026',
+        title: 'Corriendo un pipeline multi-agente en este mismo sitio',
+        summary:
+          'Armé un pipeline Builder → Auditor → QA (roles de IA aislados revisándose entre sí, nadie se autoevalúa) para el repo de este portafolio, con flujo de git solo-por-PR y branch protection ya configurada. La misma disciplina que querría en un equipo, aplicada a un equipo de uno.',
+      },
+      {
+        date: 'Oct 2026',
+        title: 'Reconstruí este portafolio como un recorrido 3D guiado por scroll',
+        summary:
+          'Cambié un layout estático por un personaje que camina/corre/se cae/hace reverencia mientras haces scroll, sincronizado con clips de animación y una máquina de estados de progreso — y después achiqué la banda del escenario cuando mi hermano me dijo que el personaje se estaba comiendo toda la pantalla.',
+      },
+      {
+        date: '2026',
+        title: 'FinanceOS — construir un SaaS de finanzas para entender Clean Architecture de verdad',
+        summary:
+          'Tracker de finanzas personales, construido en solitario para forzarme a pasar de "entiendo la teoría" a "puedo defender cada límite de capa". Escribí todo el proceso de construcción como un playbook descargable en la sección de Proyectos arriba.',
       },
     ],
   },

@@ -72,8 +72,10 @@ h4 {
   position: absolute;
   inset: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 10px;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
@@ -90,9 +92,87 @@ h4 {
   border-top-color: var(--accent-cyan);
   animation: stage-spin 0.9s linear infinite;
 }
+.stage-loader__caption {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: #8fb3c7;
+  letter-spacing: 0.02em;
+}
 @keyframes stage-spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* ---------- character click-reaction speech bubble (brand voice easter
+   egg) -- positioned centered over the stage band, fades in/out via the
+   is-visible class toggled from main.ts's click handler. ---------- */
+.stage-speech-bubble {
+  position: absolute;
+  top: 64px;
+  left: 50%;
+  transform: translate(-50%, -6px);
+  z-index: 25;
+  max-width: min(78%, 360px);
+  background: rgba(255, 255, 255, 0.96);
+  color: #221f1a;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 0.86rem;
+  line-height: 1.4;
+  text-align: center;
+  padding: 10px 16px;
+  border-radius: 16px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.stage-speech-bubble.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.stage-speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 7px 7px 0;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.96) transparent transparent;
+}
+
+/* ---------- one-time click-hint badge, teases the character click
+   easter egg -- bottom-right corner of the stage so it never overlaps
+   the speech bubble (top-center) or the nav pill. Shown once per browser
+   (localStorage flag, see main.ts) and dismissed on first interaction. */
+.stage-click-hint {
+  position: absolute;
+  bottom: 14px;
+  right: 16px;
+  z-index: 24;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: #eaf6ff;
+  background: rgba(76, 243, 255, 0.16);
+  border: 1px solid rgba(76, 243, 255, 0.4);
+  padding: 6px 12px;
+  border-radius: 20px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  animation: stage-click-hint-bob 1.8s ease-in-out infinite;
+}
+.stage-click-hint.is-visible {
+  opacity: 1;
+}
+@keyframes stage-click-hint-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
   }
 }
 
@@ -623,6 +703,42 @@ main {
   background: rgba(140, 255, 170, 0.12);
   border-color: rgba(140, 255, 170, 0.3);
   color: #8fe0a8;
+}
+
+/* ---------- lab (changelog-style "what I'm poking at lately") ---------- */
+.lab-intro {
+  margin: 0 0 20px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #cfe3f0;
+}
+.lab-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.lab-entry {
+  border-left: 2px solid rgba(255, 138, 61, 0.4);
+  padding: 2px 0 2px 18px;
+}
+.lab-entry__date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent-orange);
+  margin-bottom: 4px;
+}
+.lab-entry h4 {
+  margin: 0 0 6px;
+  font-size: 0.98rem;
+  color: #fff;
+}
+.lab-entry p {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: #cfe3f0;
 }
 
 /* ---------- contact ---------- */

@@ -36,6 +36,15 @@ export class JourneyScene {
   private cameraTargetX = 0;
   private currentClipName: string | null = null;
   private lastScene: JourneySceneData | null = null;
+  private readonly raycaster = new THREE.Raycaster();
+  private readonly pointerNdc = new THREE.Vector2();
+
+  /** Fired when the visitor clicks/taps directly on the character model --
+   *  wired by main.ts to show a speech-bubble reaction (brand-voice easter
+   *  egg). Kept as a plain callback (same pattern as JourneyCharacter's
+   *  onLoadingChange) rather than an event emitter, since this class only
+   *  ever has one consumer. */
+  onCharacterClick: (() => void) | null = null;
 
   constructor(
     private readonly container: HTMLElement,
@@ -89,6 +98,12 @@ export class JourneyScene {
     window.addEventListener('resize', this.handleResize);
     this.resizeObserver = new ResizeObserver(this.handleResize);
     this.resizeObserver.observe(container);
+
+    // Click easter egg: hit-test against the character's own meshes (not
+    // the whole canvas) so clicking empty sky/floor does nothing -- only
+    // clicking the character itself triggers the bounce + speech bubble.
+    this.renderer.domElement.addEventListener('click', this.handleStageClick);
+    this.renderer.domElement.addEventListener('pointermove', this.handleStagePointerMove);
   }
 
   start(): void {
@@ -98,6 +113,8 @@ export class JourneyScene {
   dispose(): void {
     cancelAnimationFrame(this.frameHandle);
     window.removeEventListener('resize', this.handleResize);
+    this.renderer.domElement.removeEventListener('click', this.handleStageClick);
+    this.renderer.domElement.removeEventListener('pointermove', this.handleStagePointerMove);
     this.resizeObserver.disconnect();
     this.character.dispose();
     this.mouseLook.dispose();
@@ -134,6 +151,29 @@ export class JourneyScene {
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);
     this.composer.setSize(width, height);
+  };
+
+  /** Converts a pointer/click event to normalized device coords and casts
+   *  a ray from the camera -- returns true if it hits the character's own
+   *  group (walking its full subtree, since the GLB's meshes are nested
+   *  under JourneyCharacter.group, not a single top-level mesh). */
+  private hitsCharacter(event: MouseEvent): boolean {
+    const rect = this.renderer.domElement.getBoundingClientRect();
+    this.pointerNdc.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    this.pointerNdc.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+    this.raycaster.setFromCamera(this.pointerNdc, this.camera);
+    const hits = this.raycaster.intersectObject(this.character.group, true);
+    return hits.length > 0;
+  }
+
+  private handleStageClick = (event: MouseEvent): void => {
+    if (!this.hitsCharacter(event)) return;
+    this.character.triggerClickBounce();
+    this.onCharacterClick?.();
+  };
+
+  private handleStagePointerMove = (event: PointerEvent): void => {
+    this.renderer.domElement.style.cursor = this.hitsCharacter(event) ? 'pointer' : 'default';
   };
 
   private animate = (): void => {
