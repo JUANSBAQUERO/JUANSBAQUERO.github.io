@@ -1,0 +1,43 @@
+/* ---------- lab (changelog-style "what I'm poking at lately") ---------- */
+.lab-intro {
+  margin: 0 0 20px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #cfe3f0;
+}
+.lab-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.lab-entry {
+  border-left: 2px solid rgba(255, 138, 61, 0.4);
+  padding: 2px 0 2px 18px;
+  opacity: 0;
+  transform: translateX(-14px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition-delay: calc(var(--stagger-index, 0) * 70ms);
+}
+.beat-card.is-revealed .lab-entry {
+  opacity: 1;
+  transform: translateX(0);
+}
+.lab-entry__date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent-primary);
+  margin-bottom: 4px;
+}
+.lab-entry h4 {
+  margin: 0 0 6px;
+  font-size: 0.98rem;
+  color: #fff;
+}
+.lab-entry p {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: #cfe3f0;
+}

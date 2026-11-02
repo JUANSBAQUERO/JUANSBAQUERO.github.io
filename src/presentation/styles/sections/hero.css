@@ -1,0 +1,29 @@
+/* ---------- hero (only the hero-specific pieces; shared .beat-card/.tag-pill
+   live in layout.css) ---------- */
+.hero-availability {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.74rem;
+  letter-spacing: 0.02em;
+  color: #8fe0a8;
+  background: rgba(140, 255, 170, 0.1);
+  border: 1px solid rgba(140, 255, 170, 0.3);
+  border-radius: 20px;
+  padding: 6px 14px;
+  margin-top: 14px;
+}
+.hero-subtitle {
+  display: inline-block;
+  font-family: 'Baloo 2', sans-serif;
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  font-weight: 700;
+  color: #fff;
+  background: var(--accent-primary);
+  padding: 8px 20px;
+  border-radius: 10px;
+  transform: rotate(-2deg);
+  margin: 16px 0 16px;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
+}

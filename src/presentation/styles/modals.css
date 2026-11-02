@@ -1,0 +1,84 @@
+/* ---------- Privacy & Legal Notice modal (base look shared/reused by
+   the Project detail modal -- see sections/projects.css for its
+   .proj-modal__* extensions on top of this same .legal-modal shell)
+   ---------- */
+.legal-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(5, 9, 15, 0.72);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.legal-modal-overlay[hidden] {
+  display: none;
+}
+.legal-modal {
+  background: #0f1826;
+  border: 1px solid rgba(244, 201, 93, 0.25);
+  border-radius: 18px;
+  max-width: 640px;
+  width: 100%;
+  max-height: 84vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  padding: 36px 40px;
+  position: relative;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
+  color: #eaf6ff;
+}
+.legal-modal:focus {
+  outline: none;
+}
+.legal-modal__close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: #eaf6ff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+}
+.legal-modal__close:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+.legal-modal__title {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 1.6rem;
+  margin: 0 28px 4px 0;
+  color: #fff;
+}
+.legal-modal__updated {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.74rem;
+  color: #8fb3c7;
+  margin: 0 0 24px;
+}
+.legal-modal__body h3 {
+  font-size: 1rem;
+  color: var(--accent-tertiary);
+  margin: 22px 0 8px;
+}
+.legal-modal__body h3:first-child {
+  margin-top: 0;
+}
+.legal-modal__body p {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: #cfe3f0;
+  margin: 0 0 10px;
+}
+@media (max-width: 600px) {
+  .legal-modal {
+    padding: 28px 22px;
+  }
+}
