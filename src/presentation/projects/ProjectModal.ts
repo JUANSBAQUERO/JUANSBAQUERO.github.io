@@ -95,7 +95,21 @@ export class ProjectModal {
     if (project.downloadHref) {
       this.downloadEl.href = project.downloadHref;
       this.downloadEl.textContent = `⬇ ${project.downloadLabel ?? 'Download'}`;
-      this.downloadEl.target = project.downloadHref.startsWith('http') ? '_blank' : '_self';
+      const isExternal = /^https?:\/\//.test(project.downloadHref);
+      // Same-origin files (our own /downloads/*.md) must force a real
+      // download instead of navigating -- browsers render .md as plain
+      // text inline by default, so without `download` clicking the link
+      // just opens a text preview tab instead of saving anything. Only
+      // set it for same-origin assets: the `download` attribute is
+      // ignored (and target=_blank is what we want) for cross-origin
+      // links, where we don't control the Content-Disposition anyway.
+      if (isExternal) {
+        this.downloadEl.target = '_blank';
+        this.downloadEl.removeAttribute('download');
+      } else {
+        this.downloadEl.removeAttribute('target');
+        this.downloadEl.setAttribute('download', project.downloadHref.split('/').pop() ?? '');
+      }
       this.downloadEl.hidden = false;
     } else {
       this.downloadEl.hidden = true;
