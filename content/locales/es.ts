@@ -43,6 +43,8 @@ export const es: LocaleContent = {
       'Nueva experiencia desbloqueada: que me pinchen.',
       'Te daría la mano pero no tengo rig para eso.',
     ],
+    whatsappLabel: 'Escríbeme por WhatsApp',
+    whatsappMessage: '¡Hola Juan! Vi tu portafolio y me gustaría hablar.',
   },
 
   about: {

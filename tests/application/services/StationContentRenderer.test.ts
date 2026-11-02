@@ -6,6 +6,7 @@ import {
   renderExperienceList,
   renderProjectCards,
   renderSkillGroups,
+  buildWhatsappHref,
 } from '../../../src/application/services/StationContentRenderer';
 import {
   aboutContent,
@@ -107,6 +108,21 @@ describe('StationContentRenderer', () => {
       expect(html).toContain(plainText!.label);
 
       expect(html).toContain(contactContent.note);
+    });
+  });
+
+  describe('buildWhatsappHref', () => {
+    it('builds a wa.me link with the phone digits and URL-encoded message', () => {
+      const href = buildWhatsappHref('573214915457', 'Hi Juan! Let\u2019s talk.');
+      expect(href).toBe('https://wa.me/573214915457?text=Hi%20Juan!%20Let%E2%80%99s%20talk.');
+    });
+
+    it('URL-encodes accents, quotes and emoji so the link never breaks', () => {
+      const href = buildWhatsappHref('573214915457', '\u00a1Hola Juan! \u00bfVi tu portafolio?');
+      expect(href).toContain('https://wa.me/573214915457?text=');
+      // decodeURIComponent round-trips exactly back to the original message.
+      const query = href.split('?text=')[1];
+      expect(decodeURIComponent(query)).toBe('\u00a1Hola Juan! \u00bfVi tu portafolio?');
     });
   });
 });

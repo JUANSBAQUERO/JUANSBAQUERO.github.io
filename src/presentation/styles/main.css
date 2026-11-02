@@ -1080,3 +1080,67 @@ main {
 .proj-modal__download[hidden] {
   display: none;
 }
+
+/* ---------- floating WhatsApp button ---------- */
+/* Fixed bottom-right, above the footer and any modal overlay (100) but
+   below nothing -- it should always be reachable. Bubblegum pink by
+   default (--accent-secondary, matches the brand refresh), shifts to the
+   warm orange anchor (--accent-primary) on hover/focus so it still reads
+   as "the" CTA color without introducing a 4th brand hue. A continuous
+   gentle bounce (not just a hover transform) is what reads "chibi/
+   playful" here instead of a static corporate chat bubble -- paused
+   entirely under prefers-reduced-motion (see the global media query at
+   the end of this file). */
+.whatsapp-float {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 60;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-secondary);
+  color: #1a0f05;
+  box-shadow: 0 10px 28px rgba(255, 95, 162, 0.4);
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  animation: whatsapp-float-bounce 2.6s ease-in-out infinite;
+}
+.whatsapp-float svg {
+  width: 30px;
+  height: 30px;
+}
+.whatsapp-float:hover,
+.whatsapp-float:focus-visible {
+  background: var(--accent-primary);
+  box-shadow: 0 12px 32px rgba(255, 138, 61, 0.5);
+  animation-play-state: paused;
+  transform: scale(1.08);
+}
+.whatsapp-float:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+@keyframes whatsapp-float-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+@media (max-width: 480px) {
+  .whatsapp-float {
+    right: 14px;
+    bottom: 14px;
+    width: 50px;
+    height: 50px;
+  }
+  .whatsapp-float svg {
+    width: 26px;
+    height: 26px;
+  }
+}

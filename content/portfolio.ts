@@ -21,6 +21,10 @@ export const stationLayout: readonly StationSection[] = [
   { key: 'contact', color: 0xff5fa2, position: { x: 14, y: 0, z: 10 } },
 ];
 
+/** E.164 digits only (no "+", spaces or dashes) -- required format for
+ *  WhatsApp's wa.me click-to-chat links (see buildWhatsappHref). */
+export const WHATSAPP_PHONE_E164 = '573214915457';
+
 export const aboutContent: AboutContent = {
   key: 'about',
   accentHex: '#F4C95D',
