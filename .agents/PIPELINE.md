@@ -72,3 +72,12 @@ clon/tenants:
 
 Si algo en esta carpeta contradice los skills de Hermes referenciados en
 `agent-library.yaml`, el skill gana — corregir aquí, no al revés.
+
+## Config de repo verificada (JUANSBAQUERO/JUANSBAQUERO.github.io, 2026-11-02)
+- `delete_branch_on_merge: true` activado a nivel de repo — borra SOLO la
+  rama head/feature al mergear un PR, nunca `main` (el borrado de head
+  branch no toca la base por diseño de GitHub).
+- `main` con branch protection: `allow_deletions: false`,
+  `allow_force_pushes: false`, `enforce_admins: true` — no se puede borrar
+  ni con permisos de admin. No volver a verificar esto cada vez; solo
+  revisar de nuevo si algo reporta un comportamiento distinto.
