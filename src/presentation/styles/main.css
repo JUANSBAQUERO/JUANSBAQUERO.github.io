@@ -40,7 +40,7 @@ h4 {
   top: 0;
   left: 0;
   right: 0;
-  height: var(--stage-band-height, 46vh);
+  height: var(--stage-band-height, 30vh);
   z-index: 20;
   background: #0b1420;
   overflow: hidden;
@@ -304,7 +304,7 @@ h4 {
 main {
   position: relative;
   z-index: 10;
-  padding-top: var(--stage-band-height, 46vh);
+  padding-top: var(--stage-band-height, 30vh);
 }
 .beat {
   min-height: 70vh;
@@ -542,10 +542,32 @@ main {
   border-radius: 14px;
   overflow: hidden;
   transition: transform 0.25s ease, background 0.25s ease;
+  /* Cards became real <button> elements so they can open the project
+     detail modal -- reset button chrome so they still read as cards,
+     not form controls, and make the whole tile clickable/focusable. */
+  display: block;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  padding: 0;
+  cursor: pointer;
 }
-.proj-card:hover {
+.proj-card:hover,
+.proj-card:focus-visible {
   transform: translateY(-4px);
   background: rgba(255, 255, 255, 0.1);
+}
+.proj-card:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 2px;
+}
+.proj-card__hint {
+  margin: 0 16px 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
+  color: var(--accent-cyan);
 }
 .proj-tile {
   --tile-color: #4cf3ff;
@@ -761,4 +783,48 @@ main {
   * {
     animation-duration: 0.001ms !important;
   }
+}
+
+/* ---------- Project detail modal (reuses .legal-modal base look) ---------- */
+.proj-modal__org {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--accent-magenta);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 28px 6px 0;
+}
+.proj-modal__body {
+  font-size: 0.94rem;
+  line-height: 1.7;
+  color: #cfe3f0;
+  margin: 0 0 18px;
+}
+.proj-modal__stack {
+  margin-bottom: 20px;
+}
+.proj-modal__stack[hidden] {
+  display: none;
+}
+.proj-modal__download {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #1a0f05;
+  background: var(--accent-orange);
+  padding: 12px 20px;
+  border-radius: 40px;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(255, 138, 61, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.proj-modal__download:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(255, 138, 61, 0.4);
+}
+.proj-modal__download[hidden] {
+  display: none;
 }

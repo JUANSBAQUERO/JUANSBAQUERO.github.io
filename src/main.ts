@@ -21,6 +21,7 @@ import type { StationKey } from './domain/entities/Station';
 import { journeyBeats, journeyScenes } from '../content/journey';
 import { getLocaleContent } from '../content/locales/index';
 import { LegalModal } from './presentation/legal/LegalModal';
+import { ProjectModal } from './presentation/projects/ProjectModal';
 
 /** Beat ids that map 1:1 onto the old StationKey nav items -- everything
  *  the nav pill links to still exists as a beat, just inside the new
@@ -56,6 +57,11 @@ function bootstrap(): void {
 
   const nav = new NavPillView(getLocaleContent(initialLocale).ui.nav);
   const legalModal = new LegalModal();
+  const projectModal = new ProjectModal();
+  projectModal.setScrollHooks(
+    () => smoothScroll.pause(),
+    () => smoothScroll.resume(),
+  );
   let currentLocale: Locale = initialLocale;
 
   applyLocale(currentLocale, nav, legalModal);
@@ -71,6 +77,20 @@ function bootstrap(): void {
     () => smoothScroll.pause(),
     () => smoothScroll.resume(),
   );
+
+  // Project cards are re-rendered wholesale on every locale switch (see
+  // applyLocale -> setHtml('projectsGrid', ...)), so binding a click
+  // listener per-card at render time would need re-wiring on every
+  // language change. Delegate from the stable grid container instead --
+  // it survives innerHTML replacement because the container itself is
+  // never replaced, only its children.
+  document.getElementById('projectsGrid')?.addEventListener('click', (e) => {
+    const card = (e.target as HTMLElement).closest<HTMLElement>('[data-project-index]');
+    if (!card) return;
+    const index = Number(card.dataset.projectIndex);
+    const project = getLocaleContent(currentLocale).projects.projects[index];
+    if (project) projectModal.show(project);
+  });
 
   nav.onNavigate = (key) => {
     const target = document.getElementById(`beat-${key}`);

@@ -34,6 +34,20 @@ export interface ProjectEntry {
   readonly org: string;
   readonly title: string;
   readonly summary: string;
+  /** Longer case-study paragraph shown in the project detail modal when the
+   *  card is clicked -- most entries here are client work with no public
+   *  demo, so the modal (not an external link) is what gives "where does
+   *  this card go" a real answer. Optional: cards without it just show the
+   *  summary again in the modal. */
+  readonly detail?: string;
+  /** Tech stack tags shown in the detail modal (distinct from the Skills
+   *  station's global stack list -- these are per-project). */
+  readonly stack?: readonly string[];
+  /** Real downloadable resource for this project (e.g. a build playbook).
+   *  Only set when something genuinely downloadable exists -- most project
+   *  cards have neither field and the modal just shows the case study. */
+  readonly downloadLabel?: string;
+  readonly downloadHref?: string;
 }
 
 export interface SkillGroup {

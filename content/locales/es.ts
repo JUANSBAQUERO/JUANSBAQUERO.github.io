@@ -96,45 +96,91 @@ export const es: LocaleContent = {
         title: 'WebApp de Gestión de Inventario con IA',
         summary:
           'Plataforma SaaS con pronóstico de demanda impulsado por IA para optimizar inventario y prevenir desabastecimientos/sobrestock, con arquitectura de microservicios escalable.',
+        detail:
+          'Co-creación de la aplicación web principal y microservicios backend de una plataforma SaaS que pronostica demanda con IA para ayudar a negocios a evitar desabastecimientos y sobrestock. Liderazgo del UI/UX en los dashboards de pronóstico, manteniendo la capa de servicios escalable y SOLID.',
+        stack: ['React.js', 'TypeScript', 'NestJS', 'IA', 'Microservicios'],
       },
       {
         org: 'Payments Way',
         title: 'Billetera Digital White-Label',
         summary:
           'Billetera digital personalizable con UI/UX intuitiva y seguridad transaccional, construida para white-labeling rápido entre clientes.',
+        detail:
+          'Billetera móvil híbrida/nativa diseñada para ser re-marcada y re-desplegada rápidamente por cliente, con backends seguros en Java (Spring Boot) manejando la integridad transaccional.',
+        stack: ['Flutter', 'React Native', 'Spring Boot'],
       },
       {
         org: 'Payments Way',
         title: 'Sistema de Tag para Pago de Peajes',
         summary:
           'Integración de hardware y software para pagos de peaje en tiempo real, con estrictos requisitos de optimización de rendimiento.',
+        detail:
+          'Integración de hardware físico de tags de peaje con un backend de pagos en tiempo real, bajo requisitos estrictos de latencia — una lectura de carril debía resolverse y cobrar en el tiempo que toma un vehículo en pasar.',
+        stack: ['Kotlin', 'Swift', 'Spring Boot'],
       },
       {
         org: 'Payments Way',
         title: 'Plataforma de E-commerce de Moda',
         summary:
           'Gestión de datos de alto volumen y algoritmos de recomendación personalizados para una tienda de moda en línea.',
+        detail:
+          'Construcción de la capa de datos y la lógica de recomendación de una plataforma de e-commerce de moda con alto volumen de catálogo/órdenes, con personalización como motor de descubrimiento de productos.',
+        stack: ['React Native', 'Spring Boot', 'PostgreSQL'],
       },
       {
         org: 'Rational Software',
         title: 'ICFES',
         summary:
           'Soluciones tecnológicas para optimizar procesos de evaluación educativa a escala nacional en Colombia.',
+        detail:
+          'Parte del equipo que construyó y operó una plataforma nacional de evaluación educativa para el ICFES, conectando backends Spring Boot/NestJS con frontends Angular/React bajo requisitos estrictos de confiabilidad (picos de tráfico el día del examen, sin margen para caídas).',
+        stack: ['Angular', 'React', 'Spring Boot', 'NestJS'],
       },
       {
         org: 'Rational Software',
         title: 'Bolsa Mercantil de Colombia',
-        summary: 'Implementación de aplicaciones web críticas que fortalecen los servicios digitales de la bolsa.',
+        summary:
+          'Implementación de aplicaciones web críticas que fortalecen los servicios digitales de la bolsa.',
+        detail:
+          'Entrega de aplicaciones web críticas para una bolsa financiera, donde la precisión de los datos y el uptime impactan directamente las operaciones de trading.',
+        stack: ['Angular', 'NestJS', 'PostgreSQL'],
       },
       {
         org: 'DigiWorld',
         title: 'Pasarela de Pagos — Payments Way',
         summary: 'Pasarela transaccional a medida manejando datos sensibles sobre infraestructura segura.',
+        detail:
+          'Pasarela de pagos transaccional a medida manejando datos sensibles de tarjeta/cuenta, con la seguridad y el cumplimiento como restricciones de primer nivel, no como un añadido.',
+        stack: ['PHP', 'Node.js', 'ReactJS'],
       },
       {
         org: 'DigiWorld',
         title: 'Cámara de Comercio Colombo Ecuatoriana & Rockgota',
-        summary: 'Desarrollo de software a medida y resolución de problemas para requerimientos institucionales complejos.',
+        summary:
+          'Desarrollo de software a medida y resolución de problemas para requerimientos institucionales complejos.',
+        detail:
+          'Software a medida construido alrededor de flujos institucionales específicos para una cámara de comercio binacional y un cliente adicional, priorizando el ajuste a su proceso existente en vez de forzar una herramienta genérica.',
+        stack: ['PHP', 'Node.js'],
+      },
+      {
+        org: 'Proyecto Personal',
+        title: 'FinanceOS — Control de Finanzas Personales',
+        summary:
+          'SaaS de finanzas personales configurable: dashboard, gastos, deudas, flujo de caja, metas e inversiones, construido en solitario de principio a fin.',
+        detail:
+          'Un tracker de finanzas personales construido desde cero para aplicar Clean Architecture tanto en frontend como en backend: frontend React feature-first, backend en Supabase (PostgreSQL + Auth + Row Level Security), offline-first vía IndexedDB. Cubre dashboard, registro de gastos, proyección de pago de deudas, flujo de caja, metas e inversiones.',
+        stack: ['React', 'TypeScript', 'Supabase', 'PostgreSQL', 'Zustand', 'TanStack Query'],
+        downloadLabel: 'Descargar el playbook de construcción (Markdown)',
+        downloadHref: '/downloads/finance-tracker-playbook.md',
+      },
+      {
+        org: 'Proyecto Personal',
+        title: 'Stack Rush — Juego Móvil',
+        summary:
+          'Juego móvil hipercasual de apilar bloques construido con React Native + Expo para iOS y Android.',
+        detail:
+          'Un juego hipercasual de apilado donde las colocaciones precisas mantienen el bloque en su tamaño completo y los fallos lo reducen hasta el Game Over. Construido como ejercicio de un motor de juego libre de framework (funciones puras, sin React en el loop principal) impulsado por un único store de Zustand, con cobertura de tests completa en la lógica del motor.',
+        stack: ['React Native', 'Expo', 'TypeScript', 'Zustand', 'Reanimated'],
       },
     ],
   },
