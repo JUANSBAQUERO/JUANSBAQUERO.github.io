@@ -48,15 +48,18 @@ h4 {
 /* Soft fade instead of a hard line between the fixed animation band and
    the scrolling content below -- the 3D render itself just stops at the
    stage's bottom edge, which reads as an abrupt cut no matter what color
-   is on each side. Fading the render to the shared background color over
-   its last ~140px blends the two into one continuous backdrop. */
+   is on each side. Height as a % of the band (not a fixed px) so shrinking
+   --stage-band-height (e.g. 46vh -> 30vh) doesn't make this fade eat a
+   proportionally bigger chunk of the band -- a fixed 140px covered ~53% of
+   a 46vh band but ~81% of a 30vh one, visually cropping most of the
+   character into the gradient and reading as "cut off". */
 #journey-stage::after {
   content: '';
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 140px;
+  height: 28%;
   background: linear-gradient(to bottom, rgba(11, 20, 32, 0) 0%, rgba(11, 20, 32, 0.7) 60%, #0b1420 100%);
   pointer-events: none;
 }
