@@ -1,0 +1,51 @@
+/* ---------- experience list ---------- */
+.experience-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.job {
+  border-left: 2px solid rgba(244, 201, 93, 0.35);
+  padding: 4px 0 24px 22px;
+  position: relative;
+  /* Staggered reveal: each item fades/slides in with an increasing delay
+     (set as --stagger-index from main.ts) once the PARENT beat-card gets
+     .is-revealed, so a list reads as "appearing one by one" instead of
+     popping in all at once with the card. */
+  opacity: 0;
+  transform: translateX(-14px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition-delay: calc(var(--stagger-index, 0) * 70ms);
+}
+.beat-card.is-revealed .job {
+  opacity: 1;
+  transform: translateX(0);
+}
+.job::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 8px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-tertiary);
+  box-shadow: 0 0 10px var(--accent-tertiary);
+}
+.job h3 {
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+  color: #fff;
+}
+.job .meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: #8fb3c7;
+  margin-bottom: 8px;
+}
+.job p {
+  margin: 0 0 10px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #cfe3f0;
+}

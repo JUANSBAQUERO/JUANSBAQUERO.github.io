@@ -1,0 +1,49 @@
+:root {
+  --cream: #f4ede2;
+  --ink: #221f1a;
+  --ink-soft: #6b6456;
+  --accent-primary: #ff8a3d;
+  --accent-secondary: #ff5fa2;
+  --accent-tertiary: #f4c95d;
+  --card: #ffffff;
+  --line: rgba(34, 31, 26, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #0b1420;
+  color: var(--ink);
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Baloo 2', 'Space Grotesk', sans-serif;
+  letter-spacing: -0.01em;
+}
+
+/* Editorial accent: the last word of a heading rendered in an italic serif
+   (inspired by monosexpertos.com's oversized magazine-style type mixing a
+   serif italic with the regular display font) -- applied generically via
+   wrapLastWordAccent() rather than hand-authored per heading, so every
+   section heading + the hero subtitle gets the same treatment for free. */
+.editorial-accent {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+  }
+}

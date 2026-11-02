@@ -1,0 +1,17 @@
+/* ---------- about ---------- */
+.beat-card__identity {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin: 14px 0 4px;
+  color: #fff;
+}
+.tc-body p {
+  margin: 0 0 12px;
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: #cfe3f0;
+}
+.tc-body p:last-child {
+  margin-bottom: 0;
+}

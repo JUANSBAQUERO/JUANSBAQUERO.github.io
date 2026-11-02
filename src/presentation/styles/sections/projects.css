@@ -1,0 +1,135 @@
+/* ---------- projects grid ---------- */
+.proj-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+.proj-grid--wide {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+@media (max-width: 760px) {
+  .proj-grid--wide {
+    grid-template-columns: 1fr;
+  }
+}
+.proj-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.25s ease, background 0.25s ease, opacity 0.5s ease;
+  /* Cards became real <button> elements so they can open the project
+     detail modal -- reset button chrome so they still read as cards,
+     not form controls, and make the whole tile clickable/focusable. */
+  display: block;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(18px);
+  transition-delay: calc(var(--stagger-index, 0) * 70ms);
+}
+.beat-card.is-revealed .proj-card {
+  opacity: 1;
+  transform: translateY(0);
+}
+.proj-card:hover,
+.proj-card:focus-visible {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.1);
+  transition-delay: 0s;
+}
+.proj-card:focus-visible {
+  outline: 2px solid var(--accent-tertiary);
+  outline-offset: 2px;
+}
+.proj-card__hint {
+  margin: 0 16px 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
+  color: var(--accent-tertiary);
+}
+.proj-tile {
+  --tile-color: #f4c95d;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--tile-color), color-mix(in srgb, var(--tile-color) 60%, #000));
+}
+.proj-tile span {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: 2.1rem;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+.proj-card .org {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.64rem;
+  color: var(--accent-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 14px 16px 0;
+}
+.proj-card h4 {
+  margin: 6px 16px 6px;
+  font-size: 0.98rem;
+  color: #fff;
+}
+.proj-card p {
+  margin: 0 16px 16px;
+  font-size: 0.82rem;
+  color: #cfe3f0;
+  line-height: 1.5;
+}
+
+/* ---------- Project detail modal (reuses .legal-modal base look, see
+   modals.css) ---------- */
+.proj-modal__org {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--accent-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 28px 6px 0;
+}
+.proj-modal__body {
+  font-size: 0.94rem;
+  line-height: 1.7;
+  color: #cfe3f0;
+  margin: 0 0 18px;
+}
+.proj-modal__stack {
+  margin-bottom: 20px;
+}
+.proj-modal__stack[hidden] {
+  display: none;
+}
+.proj-modal__download {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #1a0f05;
+  background: var(--accent-primary);
+  padding: 12px 20px;
+  border-radius: 40px;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(255, 138, 61, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.proj-modal__download:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(255, 138, 61, 0.4);
+}
+.proj-modal__download[hidden] {
+  display: none;
+}

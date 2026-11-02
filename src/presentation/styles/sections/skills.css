@@ -1,0 +1,25 @@
+/* ---------- skills ---------- */
+.skill-group {
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition-delay: calc(var(--stagger-index, 0) * 70ms);
+}
+.beat-card.is-revealed .skill-group {
+  opacity: 1;
+  transform: translateY(0);
+}
+.skill-group h4 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--accent-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 10px;
+}
+.skills-list .tag {
+  background: rgba(244, 201, 93, 0.12);
+  border-color: rgba(244, 201, 93, 0.3);
+  color: var(--accent-tertiary);
+}
