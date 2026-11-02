@@ -30,6 +30,18 @@ h4 {
   letter-spacing: -0.01em;
 }
 
+/* Editorial accent: the last word of a heading rendered in an italic serif
+   (inspired by monosexpertos.com's oversized magazine-style type mixing a
+   serif italic with the regular display font) -- applied generically via
+   wrapLastWordAccent() rather than hand-authored per heading, so every
+   section heading + the hero subtitle gets the same treatment for free. */
+.editorial-accent {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
 /* ---------- fixed 3D journey stage: occupies a fixed band at the TOP of
    the viewport (not the full screen) -- content cards live in normal
    document flow below it, so the two never compete for the same space or
@@ -592,10 +604,18 @@ main {
 }
 
 .beat-card h2 {
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-size: clamp(2rem, 4.2vw, 3.1rem);
   font-weight: 800;
+  line-height: 1.05;
   margin: 12px 0 18px;
   color: #fff;
+}
+.beat-card h2 .editorial-accent {
+  /* The accent word drops the display font's heavy weight entirely -- the
+     mixed-weight contrast (bold sans + lighter italic serif) is what reads
+     as "editorial" rather than just "every heading got a random font". */
+  font-size: 1.05em;
+  color: inherit;
 }
 .tag-pill {
   display: inline-block;

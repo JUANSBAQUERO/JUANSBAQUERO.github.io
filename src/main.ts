@@ -17,6 +17,7 @@ import {
   renderProjectCards,
   renderSkillGroups,
 } from './application/services/StationContentRenderer';
+import { wrapLastWordAccent } from './application/services/EditorialAccent';
 import { resolveInitialLocale, LocalePreference } from './application/services/LocalePreference';
 import { SUPPORTED_LOCALES, type Locale } from './domain/entities/Locale';
 import type { StationKey } from './domain/entities/Station';
@@ -260,23 +261,23 @@ function applyLocale(locale: Locale, nav: NavPillView, legalModal: LegalModal): 
   setHtml('tcAboutBody', renderAboutParagraphs(content.about));
 
   setText('experienceTag', content.ui.experienceTag);
-  setText('experienceHeading', content.ui.experienceHeading);
+  setHtml('experienceHeading', wrapLastWordAccent(content.ui.experienceHeading));
   setHtml('experienceList', renderExperienceList(content.experience));
 
   setText('projectsTag', content.ui.projectsTag);
-  setText('projectsHeading', content.ui.projectsHeading);
+  setHtml('projectsHeading', wrapLastWordAccent(content.ui.projectsHeading));
   setHtml('projectsGrid', renderProjectCards(content.projects));
 
   setText('labTag', content.ui.labTag);
-  setText('labHeading', content.ui.labHeading);
+  setHtml('labHeading', wrapLastWordAccent(content.ui.labHeading));
   setText('labIntro', content.lab.intro);
   setHtml('labList', renderLabEntries(content.lab));
 
   setText('skillsTag', content.ui.skillsTag);
-  setText('skillsHeading', content.ui.skillsHeading);
+  setHtml('skillsHeading', wrapLastWordAccent(content.ui.skillsHeading));
   setHtml('skillsList', renderSkillGroups(content.skills));
 
-  setText('contactHeading', content.ui.contactHeading);
+  setHtml('contactHeading', wrapLastWordAccent(content.ui.contactHeading));
   setHtml('contactList', renderContactRows(content.contact));
 
   setText('legalLink', content.ui.footerLegalLink);
