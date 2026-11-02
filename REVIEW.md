@@ -5,19 +5,20 @@ agrega al abrir el PR y se elimina al mergearlo (el histórico completo
 queda en `.agents/SDD/contracts/` y en `git log`). Ver
 `.agents/rules/documentation-policy.md` para el formato.
 
-## PR — feat: floating WhatsApp button with chibi-style idle bounce
+## PR — refactor: split main.css into per-concern files
 
-**feat:** botón flotante de WhatsApp (fixed, esquina inferior derecha)
-con link precargado al número real de Juan, estilo chibi/juguetón (rosa
-chicle con rebote idle continuo, naranja en hover), consistente con la
-paleta del brand refresh.
+**refactor:** `main.css` (1143 líneas) dividido en 13 archivos por
+responsabilidad (tokens, stage 3D, nav, shell genérico de beats, una
+sección por archivo, footer, modales), siguiendo el mismo patrón de
+separación que ya usa `content/` por sección. `main.css` queda como
+índice de `@import`. Cero cambio de contenido de ninguna regla.
 
-**bug:** N/A — feature nueva.
+**bug:** N/A — refactor de pura reorganización, sin cambio visual.
 
-**cómo verificar:** cargar el sitio, confirmar el botón visible en todas
-las secciones con rebote sutil; hover cambia a naranja; click abre
-WhatsApp con mensaje precargado; cambiar idioma EN/ES actualiza el
-mensaje; mobile se ve proporcional; el modal legal sigue tapándolo.
+**cómo verificar:** confirmar que el sitio se ve exactamente igual en
+todas las secciones (About/Experience/Projects/Skills/Lab/Contact),
+mobile, y el modal legal; el CSS compilado (`dist/assets/*.css`) debe
+pesar lo mismo que antes.
 
-PR: https://github.com/JUANSBAQUERO/JUANSBAQUERO.github.io/pull/6 ·
-Contrato: `.agents/SDD/contracts/whatsapp-floating-button.md`
+PR: https://github.com/JUANSBAQUERO/JUANSBAQUERO.github.io/pull/7 ·
+Contrato: `.agents/SDD/contracts/split-css-architecture.md`
