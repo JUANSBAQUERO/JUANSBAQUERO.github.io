@@ -28,10 +28,23 @@ export function buildJourneyEnvironment(scene: THREE.Scene): FallingLeaves {
   scene.add(fillLight);
 
   const floorTexture = createWoodPlankFloorTexture();
-  floorTexture.repeat.set((TRACK_MAX_X - TRACK_MIN_X + 6) / 2, 1);
+  // Margins below are generous on purpose: the journey stage band's own
+  // CSS height (--stage-band-height) was shrunk from 46vh to 30vh per
+  // portfolio feedback, which made the band's aspect ratio much WIDER
+  // relative to its height at the same viewport width. A PerspectiveCamera
+  // with a fixed vertical FOV shows a proportionally wider horizontal
+  // frustum as aspect ratio grows, so floor/backdrop planes sized only for
+  // the old (taller) band's frustum no longer reach its edges -- the
+  // renderer's clear color showed through at the top/side corners, and the
+  // mountain backdrop read as an over-zoomed crop. Oversizing both planes
+  // well past any aspect ratio the band is likely to use avoids having to
+  // re-tune this every time the band height changes (see
+  // threejs-webgl-development skill: "fixed camera must be framed against
+  // the most-extended case").
+  floorTexture.repeat.set((TRACK_MAX_X - TRACK_MIN_X + 30) / 2, 1);
 
   const floor = new THREE.Mesh(
-    new THREE.PlaneGeometry(TRACK_MAX_X - TRACK_MIN_X + 6, 6),
+    new THREE.PlaneGeometry(TRACK_MAX_X - TRACK_MIN_X + 30, 20),
     new THREE.MeshStandardMaterial({ map: floorTexture, roughness: 0.8, metalness: 0.05 }),
   );
   floor.rotation.x = -Math.PI / 2;
@@ -39,10 +52,11 @@ export function buildJourneyEnvironment(scene: THREE.Scene): FallingLeaves {
   scene.add(floor);
 
   // Backdrop: warm anime sunset sky with mountain silhouettes, replacing
-  // the earlier flat blue-gray clear color / code-editor panel.
+  // the earlier flat blue-gray clear color / code-editor panel. Sized with
+  // the same generous margin as the floor above, for the same reason.
   const skyTexture = createAnimeSkyTexture();
   const backdrop = new THREE.Mesh(
-    new THREE.PlaneGeometry(TRACK_MAX_X - TRACK_MIN_X + 24, 16),
+    new THREE.PlaneGeometry(TRACK_MAX_X - TRACK_MIN_X + 70, 34),
     new THREE.MeshBasicMaterial({ map: skyTexture }),
   );
   backdrop.position.set((TRACK_MIN_X + TRACK_MAX_X) / 2, 5, -6);
