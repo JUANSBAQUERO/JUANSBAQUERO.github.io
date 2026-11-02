@@ -39,6 +39,11 @@ export function renderExperienceList(content: ExperienceContent): string {
 
 const PROJECT_TILE_COLORS = ['#FF4CD6', '#4CF3FF', '#FFC24C', '#7CFF4C', '#9B6CFF', '#FF6C4C'];
 
+/** Each card is a real <button>, not a static <div> -- clicking it opens
+ *  the project detail modal (wired in main.ts via data-project-index), so
+ *  "the card goes somewhere" even for client work with no public demo. A
+ *  small hint row signals that explicitly instead of leaving a dead-end
+ *  looking tile. */
 export function renderProjectCards(content: ProjectsContent): string {
   return content.projects
     .map((p, i) => {
@@ -50,12 +55,13 @@ export function renderProjectCards(content: ProjectsContent): string {
         .join('')
         .toUpperCase();
       return `
-      <div class="proj-card">
+      <button type="button" class="proj-card" data-project-index="${i}">
         <div class="proj-tile" style="--tile-color:${tileColor}"><span>${initials}</span></div>
         <div class="org">${p.org}</div>
         <h4>${p.title}</h4>
         <p>${p.summary}</p>
-      </div>`;
+        <div class="proj-card__hint">${p.downloadHref ? '↓ Case study + download' : '→ View case study'}</div>
+      </button>`;
     })
     .join('');
 }

@@ -1,11 +1,5 @@
 import type { JourneyBeat, JourneyScene } from '../src/domain/entities/Journey';
-import {
-  aboutContent,
-  contactContent,
-  experienceContent,
-  projectsContent,
-  skillsContent,
-} from './portfolio';
+import { aboutContent, contactContent, experienceContent, projectsContent, skillsContent } from './portfolio';
 
 /**
  * The four journey scenes, in visit order. xStart/xEnd are world-space X

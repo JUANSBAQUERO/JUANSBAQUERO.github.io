@@ -1,4 +1,10 @@
-import type { AboutContent, ContactContent, ExperienceContent, ProjectsContent, SkillsContent } from '../src/domain/entities/Station';
+import type {
+  AboutContent,
+  ContactContent,
+  ExperienceContent,
+  ProjectsContent,
+  SkillsContent,
+} from '../src/domain/entities/Station';
 import type { Locale } from '../src/domain/entities/Locale';
 
 /** UI chrome strings that aren't tied to a specific Station (nav labels,

@@ -1,0 +1,16 @@
+id: architect
+name: "Arquitecto"
+version: 1.0
+base_layer: layers/architect/domain.md
+global_layer: layers/global.md
+scope: ".agents/SDD/**"
+upstream: []
+downstream: [builder]
+constraints:
+  max_files_per_operation: 5
+  requires_spec_before_code: false # solo para cambios no triviales, ver layers/architect/domain.md
+  allow_speculative_mock_data: false
+  allow_speculative_resilience_fallbacks: false
+lifecycle:
+  on_start: read_hermes_skill_and_active_spec
+  on_complete: write_or_update_contract
