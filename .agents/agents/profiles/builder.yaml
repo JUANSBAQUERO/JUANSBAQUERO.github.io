@@ -1,0 +1,16 @@
+id: builder
+name: "Constructor"
+version: 1.0
+base_layer: layers/builder/domain.md
+global_layer: layers/global.md
+scope: "src/**,content/**,public/**"
+upstream: [architect]
+downstream: [qa]
+constraints:
+  max_files_per_operation: 5
+  requires_spec_before_code: false
+  allow_speculative_mock_data: false
+  allow_speculative_resilience_fallbacks: false
+lifecycle:
+  on_start: confirm_scope_and_load_threejs_skill_if_applicable
+  on_complete: run_local_verification

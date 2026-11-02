@@ -1,0 +1,42 @@
+library_version: 1.0
+project: portfolio-threejs
+layers:
+  - name: global
+    source: layers/global.md
+    scope: "*"
+  - name: architect
+    source: layers/architect/domain.md
+    scope: ".agents/SDD/**"
+  - name: builder
+    source: layers/builder/domain.md
+    scope: "src/**,content/**,public/**"
+  - name: qa
+    source: layers/qa/domain.md
+    scope: "*"
+rules:
+  - name: testing-policy
+    source: rules/testing-policy.md
+    enforcement: strict
+  - name: git-workflow
+    source: rules/git-workflow.md
+    enforcement: strict
+  - name: pattern-respect
+    source: rules/pattern-respect.md
+    enforcement: strict
+  - name: token-optimization
+    source: rules/token-optimization.md
+    enforcement: strict
+  - name: documentation-policy
+    source: rules/documentation-policy.md
+    enforcement: strict
+agents:
+  - profile: agents/profiles/architect.yaml
+  - profile: agents/profiles/builder.yaml
+  - profile: agents/profiles/qa.yaml
+references:
+  # Fuente viva del flujo Builder->Auditor->QA->PR -- se referencia, no se
+  # duplica. Si algo en .agents/ contradice el skill, el skill gana.
+  hermes_skill: software-development/agentic-dev-pipeline
+  # Pitfalls específicos de Three.js/WebGL/scroll para este stack -- cargar
+  # siempre antes de tocar src/infrastructure/three/**.
+  hermes_skill_threejs: software-development/threejs-webgl-development

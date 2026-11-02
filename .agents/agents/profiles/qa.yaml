@@ -1,0 +1,14 @@
+id: qa
+name: "QA y Verificación"
+version: 1.0
+base_layer: layers/qa/domain.md
+global_layer: layers/global.md
+scope: "*"
+upstream: [builder]
+downstream: [architect]
+constraints:
+  max_files_per_operation: 5
+  requires_real_execution_evidence: true
+lifecycle:
+  on_start: run_build_typecheck_test
+  on_complete: report_evidence_or_reopen
