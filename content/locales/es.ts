@@ -33,6 +33,9 @@ export const es: LocaleContent = {
     skillsHeading: 'Habilidades y Stack',
     contactHeading: 'Construyamos algo juntos.',
     footerLegalLink: 'Aviso de Privacidad y Legal',
+    backToPortfolio: 'Volver al portafolio',
+    changelogAllFilter: 'Todo',
+    viewFullChangelog: 'Ver el changelog completo →',
     stageLoadingCaption: 'Amarrándose los zapatos…',
     characterClickHint: 'psst — dale click',
     characterReactions: [
@@ -235,21 +238,31 @@ export const es: LocaleContent = {
     entries: [
       {
         date: 'Nov 2026',
+        title: 'Stack Rush — por qué los anuncios nunca aparecían',
+        summary:
+          'Metí anuncios intersticiales a mi juego de apilar bloques (React Native + Expo) y en dispositivo real nunca salían. La causa: el hook que precargaba el anuncio vivía en la pantalla del juego, que se remonta completa en cada partida nueva, así que la precarga se reiniciaba antes de terminar. Lo moví a nivel de módulo y el problema desapareció.',
+        project: 'stack-rush',
+      },
+      {
+        date: 'Nov 2026',
         title: 'Corriendo un pipeline multi-agente en este mismo sitio',
         summary:
           'Armé un pipeline Builder → Auditor → QA (roles de IA aislados revisándose entre sí, nadie se autoevalúa) para el repo de este portafolio, con flujo de git solo-por-PR y branch protection ya configurada. La misma disciplina que querría en un equipo, aplicada a un equipo de uno.',
+        project: 'portfolio',
       },
       {
         date: 'Oct 2026',
         title: 'Reconstruí este portafolio como un recorrido 3D guiado por scroll',
         summary:
           'Cambié un layout estático por un personaje que camina/corre/se cae/hace reverencia mientras haces scroll, sincronizado con clips de animación y una máquina de estados de progreso — y después achiqué la banda del escenario cuando mi hermano me dijo que el personaje se estaba comiendo toda la pantalla.',
+        project: 'portfolio',
       },
       {
         date: '2026',
         title: 'FinanceOS — construir un SaaS de finanzas para entender Clean Architecture de verdad',
         summary:
           'Tracker de finanzas personales, construido en solitario para forzarme a pasar de "entiendo la teoría" a "puedo defender cada límite de capa". Escribí todo el proceso de construcción como un playbook descargable en la sección de Proyectos arriba.',
+        project: 'finance-os',
       },
     ],
   },

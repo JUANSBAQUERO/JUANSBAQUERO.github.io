@@ -65,7 +65,16 @@ export interface LabEntry {
   readonly date: string;
   readonly title: string;
   readonly summary: string;
+  /** Which personal project this entry belongs to -- powers the project
+   *  filter on the dedicated /changelog page. Keep this list in sync with
+   *  LAB_PROJECTS in StationContentRenderer.ts when adding a new project. */
+  readonly project: LabProjectKey;
 }
+
+/** Slugs for every personal project that can post a Lab/changelog entry.
+ *  Add a new one here (+ its label in LAB_PROJECTS) before using it in a
+ *  LabEntry -- this is the single source of truth for valid project keys. */
+export type LabProjectKey = 'portfolio' | 'stack-rush' | 'finance-os';
 
 export interface StationContent {
   readonly key: StationKey;

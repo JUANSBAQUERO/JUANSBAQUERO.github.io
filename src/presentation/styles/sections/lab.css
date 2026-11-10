@@ -22,13 +22,28 @@
   opacity: 1;
   transform: translateX(0);
 }
+.lab-entry__meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
 .lab-entry__date {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.68rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--accent-primary);
-  margin-bottom: 4px;
+}
+.lab-entry__project {
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(255, 138, 61, 0.14);
+  color: #cfe3f0;
 }
 .lab-entry h4 {
   margin: 0 0 6px;
@@ -40,4 +55,18 @@
   font-size: 0.86rem;
   line-height: 1.6;
   color: #cfe3f0;
+}
+.lab-changelog-link {
+  display: inline-block;
+  margin-top: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+.lab-changelog-link:hover,
+.lab-changelog-link:focus-visible {
+  opacity: 0.75;
+  text-decoration: underline;
 }

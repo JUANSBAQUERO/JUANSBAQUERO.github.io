@@ -278,6 +278,7 @@ function applyLocale(locale: Locale, nav: NavPillView, legalModal: LegalModal): 
   setHtml('labHeading', wrapLastWordAccent(content.ui.labHeading));
   setText('labIntro', content.lab.intro);
   setHtml('labList', renderLabEntries(content.lab));
+  setText('labChangelogLink', content.ui.viewFullChangelog);
 
   setText('skillsTag', content.ui.skillsTag);
   setHtml('skillsHeading', wrapLastWordAccent(content.ui.skillsHeading));

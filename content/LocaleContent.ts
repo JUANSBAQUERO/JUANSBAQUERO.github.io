@@ -41,6 +41,17 @@ export interface UiStrings {
   readonly contactHeading: string;
   readonly aboutRole: string;
   readonly footerLegalLink: string;
+  /** Back-link label on the dedicated /changelog page ("Back to portfolio"
+   *  / "Volver al portafolio") -- that page has no 3D journey nav, just a
+   *  single link home. */
+  readonly backToPortfolio: string;
+  /** Label for the "show everything" filter pill on /changelog, alongside
+   *  the per-project pills built from LAB_PROJECT_LABELS at render time. */
+  readonly changelogAllFilter: string;
+  /** Link below the Lab section's preview list on the main site, pointing
+   *  to the dedicated /changelog page where ALL entries across every
+   *  project live (the beat only ever shows the 4 most recent). */
+  readonly viewFullChangelog: string;
   /** Loading-spinner caption shown while the 3D character GLB fetches --
    *  a brand voice touch instead of a generic "Loading...". */
   readonly stageLoadingCaption: string;

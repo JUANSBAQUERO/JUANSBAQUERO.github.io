@@ -34,6 +34,9 @@ export const en: LocaleContent = {
     skillsHeading: 'Skills & Stack',
     contactHeading: "Let's build something together.",
     footerLegalLink: 'Privacy & Legal Notice',
+    backToPortfolio: 'Back to portfolio',
+    changelogAllFilter: 'All',
+    viewFullChangelog: 'View the full changelog →',
     stageLoadingCaption: 'Lacing up his shoes…',
     characterClickHint: 'psst — click him',
     characterReactions: [
@@ -233,21 +236,31 @@ export const en: LocaleContent = {
     entries: [
       {
         date: 'Nov 2026',
+        title: 'Stack Rush — why the ads never showed up',
+        summary:
+          'Added interstitial ads to my block-stacking game (React Native + Expo) and on a real device they never fired. Root cause: the hook preloading the ad lived inside the game screen, which fully remounts on every new round, resetting the preload before it finished. Moved it to module-level state and it just worked.',
+        project: 'stack-rush',
+      },
+      {
+        date: 'Nov 2026',
         title: 'Running a multi-agent dev pipeline on this exact site',
         summary:
           "Set up a Builder → Auditor → QA pipeline (isolated AI roles reviewing each other, no self-grading allowed) for this portfolio's own repo, with a PR-only git workflow and recorded branch protection. Same discipline I'd want on a team of one.",
+        project: 'portfolio',
       },
       {
         date: 'Oct 2026',
         title: 'Rebuilt this portfolio as a scroll-driven 3D journey',
         summary:
           'Swapped a static layout for a character that walks/runs/crashes/bows across the screen as you scroll, synced to animation clips and a scene-progress state machine — then tore the stage band down to size after my brother told me the character was eating all the screen real estate.',
+        project: 'portfolio',
       },
       {
         date: '2026',
         title: 'FinanceOS — building a finance SaaS to actually understand Clean Architecture',
         summary:
           "Personal finance tracker, built solo to force myself past 'I know the theory' into 'I can defend every layer boundary.' Wrote up the whole build process as a downloadable playbook in the Projects section above.",
+        project: 'finance-os',
       },
     ],
   },
@@ -287,7 +300,7 @@ export const en: LocaleContent = {
       {
         heading: 'Information this site collects',
         paragraphs: [
-          "This site uses PostHog, a privacy-conscious analytics service, to understand basic visit patterns -- whether visitors arrive at all and how far they scroll through the content sections (About, Experience, Projects, Skills, Lab, Contact). PostHog does not use advertising cookies and this site does not run any ad-tracking pixels or sell data to third parties. Analytics is skipped entirely when the site is viewed on localhost during development.",
+          'This site uses PostHog, a privacy-conscious analytics service, to understand basic visit patterns -- whether visitors arrive at all and how far they scroll through the content sections (About, Experience, Projects, Skills, Lab, Contact). PostHog does not use advertising cookies and this site does not run any ad-tracking pixels or sell data to third parties. Analytics is skipped entirely when the site is viewed on localhost during development.',
           "Separately, the only browser storage used directly by this site's own code is a single local preference (your chosen display language), saved in your browser's localStorage so it persists between visits -- it is never transmitted anywhere and you can clear it at any time via your browser settings.",
           'If you choose to email the address listed in the Contact section, any information you include in that message is handled the same as any other personal email -- it is not collected or stored by this website itself.',
         ],
