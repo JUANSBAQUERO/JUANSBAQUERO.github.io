@@ -4,9 +4,12 @@ import {
   renderAboutParagraphs,
   renderContactRows,
   renderExperienceList,
+  renderLabEntries,
   renderProjectCards,
   renderSkillGroups,
   buildWhatsappHref,
+  filterLabEntriesByProject,
+  LAB_PROJECT_LABELS,
 } from '../../../src/application/services/StationContentRenderer';
 import {
   aboutContent,
@@ -15,6 +18,7 @@ import {
   projectsContent,
   skillsContent,
 } from '../../../content/portfolio';
+import type { LabContent, LabEntry } from '../../../src/domain/entities/Station';
 
 describe('StationContentRenderer', () => {
   describe('renderAboutIdentity', () => {
@@ -123,6 +127,55 @@ describe('StationContentRenderer', () => {
       // decodeURIComponent round-trips exactly back to the original message.
       const query = href.split('?text=')[1];
       expect(decodeURIComponent(query)).toBe('\u00a1Hola Juan! \u00bfVi tu portafolio?');
+    });
+  });
+
+  const labEntries: readonly LabEntry[] = [
+    { date: 'Nov 2026', title: 'Stack Rush entry', summary: 'summary one', project: 'stack-rush' },
+    { date: 'Nov 2026', title: 'Portfolio entry', summary: 'summary two', project: 'portfolio' },
+    { date: '2026', title: 'Finance OS entry', summary: 'summary three', project: 'finance-os' },
+  ];
+  const labContent: LabContent = {
+    key: 'lab',
+    accentHex: '#FF8A3D',
+    eyebrow: 'Right now',
+    title: "What I'm poking at lately",
+    intro: 'intro text',
+    entries: labEntries,
+  };
+
+  describe('renderLabEntries', () => {
+    it('renders one .lab-entry block per entry with date, title, summary and project label', () => {
+      const html = renderLabEntries(labContent);
+      const entryCount = (html.match(/class="lab-entry"/g) ?? []).length;
+      expect(entryCount).toBe(labEntries.length);
+
+      for (const entry of labEntries) {
+        expect(html).toContain(entry.date);
+        expect(html).toContain(entry.title);
+        expect(html).toContain(entry.summary);
+        expect(html).toContain(LAB_PROJECT_LABELS[entry.project]);
+      }
+    });
+  });
+
+  describe('filterLabEntriesByProject', () => {
+    it("returns every entry unchanged when filtering by 'all'", () => {
+      expect(filterLabEntriesByProject(labEntries, 'all')).toEqual(labEntries);
+    });
+
+    it('returns only entries matching the given project', () => {
+      const filtered = filterLabEntriesByProject(labEntries, 'stack-rush');
+      expect(filtered).toHaveLength(1);
+      expect(filtered[0].title).toBe('Stack Rush entry');
+    });
+
+    it('returns an empty array when no entry matches the project', () => {
+      const noMatches = filterLabEntriesByProject(
+        labEntries.filter((e) => e.project !== 'finance-os'),
+        'finance-os',
+      );
+      expect(noMatches).toEqual([]);
     });
   });
 });

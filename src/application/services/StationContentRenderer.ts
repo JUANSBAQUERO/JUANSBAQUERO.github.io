@@ -3,6 +3,8 @@ import type {
   ContactContent,
   ExperienceContent,
   LabContent,
+  LabEntry,
+  LabProjectKey,
   ProjectsContent,
   SkillsContent,
 } from '../../domain/entities/Station';
@@ -95,12 +97,36 @@ export function renderLabEntries(content: LabContent): string {
     .map(
       (entry, i) => `
       <div class="lab-entry" style="--stagger-index:${i}">
-        <div class="lab-entry__date">${entry.date}</div>
+        <div class="lab-entry__meta">
+          <span class="lab-entry__date">${entry.date}</span>
+          <span class="lab-entry__project">${LAB_PROJECT_LABELS[entry.project]}</span>
+        </div>
         <h4>${entry.title}</h4>
         <p>${entry.summary}</p>
       </div>`,
     )
     .join('');
+}
+
+/** Display label per project slug -- the single place to add a label when
+ *  a new LabProjectKey is introduced in Station.ts. Used both by the main
+ *  site's Lab section and the dedicated /changelog page's project filter. */
+export const LAB_PROJECT_LABELS: Record<LabProjectKey, string> = {
+  portfolio: 'Portfolio',
+  'stack-rush': 'Stack Rush',
+  'finance-os': 'Finance OS',
+};
+
+/** Pure filter helper: narrows a LabEntry list down to one project, or
+ *  returns everything when no project (or 'all') is given. Shared by the
+ *  changelog page's filter UI so the filtering logic itself stays
+ *  unit-testable without touching the DOM. */
+export function filterLabEntriesByProject(
+  entries: readonly LabEntry[],
+  project: LabProjectKey | 'all',
+): readonly LabEntry[] {
+  if (project === 'all') return entries;
+  return entries.filter((entry) => entry.project === project);
 }
 
 /** wa.me deep link: phone MUST be E.164 digits only (no "+", spaces or
