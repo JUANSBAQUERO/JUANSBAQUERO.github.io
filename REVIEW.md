@@ -26,5 +26,5 @@ entradas correctamente y que el selector EN/ES cambia todo el texto
 visible (incluido el label "All"/"Todo"); en `/`, confirmar que el link
 al final de la sección Lab lleva a `/changelog.html`.
 
-PR: {se llena al abrir el PR} ·
+PR: https://github.com/JUANSBAQUERO/JUANSBAQUERO.github.io/pull/10 ·
 Contrato: `.agents/SDD/contracts/lab-changelog-page.md`

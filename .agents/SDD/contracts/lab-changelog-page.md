@@ -4,7 +4,7 @@ task_id: lab-changelog-page
 spec_ref: N/A (chico, sin spec de 3 archivos — acordado directo con Juan)
 approved_by: Juan
 created_at: 2026-11-09
-pr: {se llena al abrir el PR}
+pr: https://github.com/JUANSBAQUERO/JUANSBAQUERO.github.io/pull/10
 
 ## Objetivo
 Dar a Juan una vista dedicada y ligera del changelog de sus proyectos
