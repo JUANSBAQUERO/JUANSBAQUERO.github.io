@@ -238,9 +238,9 @@ export const es: LocaleContent = {
     entries: [
       {
         date: 'Nov 2026',
-        title: 'FinanceOS — compartiendo identidad con un bot de WhatsApp que no es mío',
+        title: 'FinanceOS — compartiendo identidad con Parce, el bot de WhatsApp de Didier',
         summary:
-          'Conecté FinanceOS con el asistente fiscal de WhatsApp de un amigo dándoles a ambas apps una tabla de identidad compartida en el mismo proyecto de Supabase, indexada por número de WhatsApp. Agregué funciones de Postgres SECURITY DEFINER para gastos, metas y deudas para que el bot pueda escribir datos financieros sin tener nunca la service_role key en su propio backend, y verifiqué RLS y permisos directamente contra la base antes de confiar en nada de eso — todo probado en vivo por el otro dev, 35/35 checks OK. En el camino trazamos un límite firme: el bot nunca toca el salario mensual, eso sigue siendo exclusivo de la PWA de FinanceOS.',
+          'Trabajando con Didier Ortega para conectar FinanceOS con Parce, su asistente fiscal de WhatsApp, dándoles a ambas apps una tabla de identidad compartida en el mismo proyecto de Supabase, indexada por número de WhatsApp. Hasta ahora: funciones de Postgres SECURITY DEFINER para gastos, metas y deudas para que el bot pueda escribir datos financieros sin tener nunca la service_role key en su propio backend, más RLS y permisos verificados directamente contra la base antes de confiar en nada de eso — todo probado en vivo por Didier, 35/35 checks OK. Trazamos un límite firme desde el inicio: el bot nunca toca el salario mensual, eso sigue siendo exclusivo de la PWA de FinanceOS. Todavía en marcha — falta más integración por venir.',
         project: 'finance-os',
       },
       {
