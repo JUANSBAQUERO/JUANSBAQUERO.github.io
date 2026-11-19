@@ -238,6 +238,13 @@ export const es: LocaleContent = {
     entries: [
       {
         date: 'Nov 2026',
+        title: 'FinanceOS — compartiendo identidad con un bot de WhatsApp que no es mío',
+        summary:
+          'Conecté FinanceOS con el asistente fiscal de WhatsApp de un amigo dándoles a ambas apps una tabla de identidad compartida en el mismo proyecto de Supabase, indexada por número de WhatsApp. Agregué funciones de Postgres SECURITY DEFINER para gastos, metas y deudas para que el bot pueda escribir datos financieros sin tener nunca la service_role key en su propio backend, y verifiqué RLS y permisos directamente contra la base antes de confiar en nada de eso — todo probado en vivo por el otro dev, 35/35 checks OK. En el camino trazamos un límite firme: el bot nunca toca el salario mensual, eso sigue siendo exclusivo de la PWA de FinanceOS.',
+        project: 'finance-os',
+      },
+      {
+        date: 'Nov 2026',
         title: 'Stack Rush — por qué los anuncios nunca aparecían',
         summary:
           'Metí anuncios intersticiales a mi juego de apilar bloques (React Native + Expo) y en dispositivo real nunca salían. La causa: el hook que precargaba el anuncio vivía en la pantalla del juego, que se remonta completa en cada partida nueva, así que la precarga se reiniciaba antes de terminar. Lo moví a nivel de módulo y el problema desapareció.',
