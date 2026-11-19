@@ -236,6 +236,13 @@ export const en: LocaleContent = {
     entries: [
       {
         date: 'Nov 2026',
+        title: "FinanceOS — sharing identity with a WhatsApp bot that isn't mine",
+        summary:
+          "Wired FinanceOS into a friend's WhatsApp fiscal assistant by giving both apps a shared identity table in the same Supabase project, keyed by phone number. Added SECURITY DEFINER Postgres functions for expenses, goals and debts so the bot can write financial data without ever holding the service_role key itself, then verified RLS and grants directly against the database before trusting any of it — all checked live by the other dev, 35/35 passing. Drew one hard boundary along the way: the bot never touches monthly salary data, that stays exclusive to the FinanceOS PWA.",
+        project: 'finance-os',
+      },
+      {
+        date: 'Nov 2026',
         title: 'Stack Rush — why the ads never showed up',
         summary:
           'Added interstitial ads to my block-stacking game (React Native + Expo) and on a real device they never fired. Root cause: the hook preloading the ad lived inside the game screen, which fully remounts on every new round, resetting the preload before it finished. Moved it to module-level state and it just worked.',
