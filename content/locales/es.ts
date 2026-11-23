@@ -238,6 +238,13 @@ export const es: LocaleContent = {
     entries: [
       {
         date: 'Nov 2026',
+        title: 'FinanceOS — lancé la landing, y después la rompí al refrescar',
+        summary:
+          "Construí una landing en Astro SSG + islands para FinanceOS con captura de waitlist protegida por RLS de Supabase (sin insert anónimo, escrituras solo server-side vía una ruta de API), y después le di tanto a la landing como al dashboard un tratamiento 'liquid glass' estilo iOS18 — que resultó necesitar color real detrás del blur, no más opacidad, para que de verdad se leyera como vidrio. El bug real: los links directos al dashboard (como /login) daban 404 en producción porque el SPA no tenía un rewrite de fallback configurado en Vercel, así que cualquier ruta que no fuera la raíz le pegaba al servidor de archivos estáticos en vez de a la app de React Router. Una línea en vercel.json lo arregló.",
+        project: 'finance-os',
+      },
+      {
+        date: 'Nov 2026',
         title: 'FinanceOS — compartiendo identidad con Parce, el bot de WhatsApp de Didier',
         summary:
           'Trabajando con Didier Ortega para conectar FinanceOS con Parce, su asistente fiscal de WhatsApp, dándoles a ambas apps una tabla de identidad compartida en el mismo proyecto de Supabase, indexada por número de WhatsApp. Hasta ahora: funciones de Postgres SECURITY DEFINER para gastos, metas y deudas para que el bot pueda escribir datos financieros sin tener nunca la service_role key en su propio backend, más RLS y permisos verificados directamente contra la base antes de confiar en nada de eso — todo probado en vivo por Didier, 35/35 checks OK. Trazamos un límite firme desde el inicio: el bot nunca toca el salario mensual, eso sigue siendo exclusivo de la PWA de FinanceOS. Todavía en marcha — falta más integración por venir.',
